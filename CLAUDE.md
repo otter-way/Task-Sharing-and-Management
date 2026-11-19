@@ -1,6 +1,8 @@
 # Ekip Görev — proje talimatları
 
-Bu proje [usekaneo/kaneo](https://github.com/usekaneo/kaneo) projesinin bir fork'u üzerine kuruludur. Upstream'in ayrıntılı geliştirme rehberi Kaneo deposundaki [`AGENTS.md`](https://github.com/usekaneo/kaneo/blob/main/AGENTS.md) dosyasındadır; Kaneo kodu bu depoya taşındığında o dosya da eklenip buradan `@AGENTS.md` ile içe aktarılmalıdır. Bu dosyadaki kurallar ve kullanıcının isteği önceliklidir.
+Bu depo [usekaneo/kaneo](https://github.com/usekaneo/kaneo) projesinin bir fork'udur. Upstream'in ayrıntılı geliştirme rehberi `AGENTS.md` dosyasındadır ve aşağıda içe aktarılır. Bu dosyadaki kurallar ve kullanıcının isteği önceliklidir.
+
+@AGENTS.md
 
 ## Proje amacı
 
