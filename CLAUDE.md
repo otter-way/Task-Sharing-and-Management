@@ -14,6 +14,7 @@ Kaneo'yu küçük bir ekibin (3-8 kişi) haftalık ve aylık görevlerini planla
 - Mevcut kod stilini ve klasör yapısını koru. Yeni bağımlılık eklemeden önce kullanıcıya sor.
 - Veritabanı değişikliklerini migration ile yap: şemayı `apps/api/src/database/schema.ts` dosyasında değiştir, `pnpm --filter @kaneo/api db:generate` ile migration üret (`apps/api/drizzle/`), oluşan SQL'i incele. Veritabanında elle şema değiştirme.
 - Kaneo'nun `LICENSE` dosyasını (MIT, © Andrej Acevski) ve telif notlarını silme ya da değiştirme.
+- Arayüze dokunan her işte [DESIGN.md](DESIGN.md)'ye uy ve `emil-design-eng` skill'ini kullan. Animasyon eklerken `animate`, birden fazla öğe birlikte hareket ederken `choreograph` skill'ini kullan.
 
 ## Mimari özet
 
