@@ -1,7 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useUserPreferencesStore } from "@/store/user-preferences";
 import { ProjectScopeLink } from "./project-scope-link";
-import { type ProjectView, tasksViewFor } from "./project-views";
+import {
+  isTaskLayoutView,
+  type ProjectView,
+  tasksViewFor,
+} from "./project-views";
 
 type ProjectScopeToggleProps = {
   workspaceId: string;
@@ -19,10 +23,8 @@ export function ProjectScopeToggle({
   const { t } = useTranslation();
   const taskLayout = useUserPreferencesStore((state) => state.taskLayout);
   const viewMode = useUserPreferencesStore((state) => state.viewMode);
-  const onBacklog = currentView === "backlog";
-  const tasksView = onBacklog
-    ? tasksViewFor(taskLayout, viewMode)
-    : currentView;
+  const onTasks = isTaskLayoutView(currentView);
+  const tasksView = onTasks ? currentView : tasksViewFor(taskLayout, viewMode);
 
   return (
     <nav
@@ -33,7 +35,7 @@ export function ProjectScopeToggle({
         view={tasksView}
         workspaceId={workspaceId}
         projectId={projectId}
-        active={!onBacklog}
+        active={onTasks}
         onSelect={onSelect}
       >
         {t("tasks:title")}
@@ -42,10 +44,19 @@ export function ProjectScopeToggle({
         view="backlog"
         workspaceId={workspaceId}
         projectId={projectId}
-        active={onBacklog}
+        active={currentView === "backlog"}
         onSelect={onSelect}
       >
         {t("tasks:view.backlog")}
+      </ProjectScopeLink>
+      <ProjectScopeLink
+        view="whiteboard"
+        workspaceId={workspaceId}
+        projectId={projectId}
+        active={currentView === "whiteboard"}
+        onSelect={onSelect}
+      >
+        {t("whiteboard:title")}
       </ProjectScopeLink>
     </nav>
   );

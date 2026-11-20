@@ -683,6 +683,34 @@ export const calendarFeedTable = pgTable(
   (table) => [index("calendar_feed_project_id_idx").on(table.projectId)],
 );
 
+// One whiteboard per project. `scene` is the client's Excalidraw scene, kept
+// opaque here. `version` grows with every save so a client can tell whether
+// someone else saved since it loaded; the last save still wins.
+export const projectBoardTable = pgTable("project_board", {
+  id: text("id")
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  projectId: text("project_id")
+    .notNull()
+    .unique()
+    .references(() => projectTable.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+  scene: jsonb("scene").$type<Record<string, unknown>>().notNull(),
+  version: integer("version").notNull().default(1),
+  updatedBy: text("updated_by").references(() => userTable.id, {
+    onDelete: "set null",
+    onUpdate: "cascade",
+  }),
+  createdAt: timestamp("created_at", { mode: "date" })
+    .default(utcNow)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" })
+    .default(utcNow)
+    .notNull(),
+});
+
 export const taskTable = pgTable(
   "task",
   {

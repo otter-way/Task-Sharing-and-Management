@@ -3859,6 +3859,40 @@
 			"durationHoursMinutes": "{{hours, number}}h {{minutes, number}}m"
 		}
 	},
+	"whiteboard": {
+		"title": "Whiteboard",
+		"pageTitle": "{{name}} / Whiteboard",
+		"loading": "Loading whiteboard…",
+		"loadError": "The whiteboard couldn't be loaded.",
+		"retry": "Try again",
+		"empty": {
+			"heading": "Drop your ideas here. Select a text or sticky note to turn it into a task."
+		},
+		"status": {
+			"neverSaved": "Not saved yet",
+			"saving": "Saving…",
+			"saved": "Saved {{time}}",
+			"savedBy": "{{name}} saved {{time}}",
+			"failed": "Couldn't save",
+			"tooLarge": "Too large to save. Remove some images.",
+			"readOnly": "View only"
+		},
+		"overwritten": "Your save replaced {{name}}'s changes from {{time}}.",
+		"convert": {
+			"button": "Convert to task",
+			"created": "Created {{key}}",
+			"error": "Couldn't create the task.",
+			"noColumn": "This project has no open column for new tasks.",
+			"open": "Open task",
+			"openKey": "Open {{key}}"
+		},
+		"export": {
+			"png": "Export PNG",
+			"error": "Couldn't export the board.",
+			"fileName": "{{name}} whiteboard"
+		},
+		"teammate": "A teammate"
+	},
 	"invitations": {
 		"email": {
 			"subject": "{{inviterName}} invited you to join {{workspaceName}} on {{instanceName}}",

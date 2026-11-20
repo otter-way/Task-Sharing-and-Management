@@ -8,15 +8,27 @@ import {
 } from "lucide-react";
 import type { TaskLayout } from "@/store/user-preferences";
 
-export type ProjectView = "board" | "list" | "backlog" | "calendar" | "gantt";
+export type ProjectView =
+  | "board"
+  | "list"
+  | "backlog"
+  | "calendar"
+  | "gantt"
+  | "whiteboard";
 
-export type ProjectRoute = "board" | "backlog" | "calendar" | "gantt";
+export type ProjectRoute =
+  | "board"
+  | "backlog"
+  | "calendar"
+  | "gantt"
+  | "whiteboard";
 
 export const PROJECT_ROUTE_PATHS = {
   board: "/dashboard/workspace/$workspaceId/project/$projectId/board",
   backlog: "/dashboard/workspace/$workspaceId/project/$projectId/backlog",
   calendar: "/dashboard/workspace/$workspaceId/project/$projectId/calendar",
   gantt: "/dashboard/workspace/$workspaceId/project/$projectId/gantt",
+  whiteboard: "/dashboard/workspace/$workspaceId/project/$projectId/whiteboard",
 } as const;
 
 export const PROJECT_VIEWS: ReadonlyArray<{
@@ -53,6 +65,12 @@ export const PROJECT_VIEWS: ReadonlyArray<{
 
 export function routeForView(view: ProjectView): ProjectRoute {
   return view === "list" ? "board" : view;
+}
+
+// Views beside the task layouts in the scope toggle; they never become the
+// remembered task layout.
+export function isTaskLayoutView(view: ProjectView): view is TaskLayout {
+  return view !== "backlog" && view !== "whiteboard";
 }
 
 export function resolveProjectView(

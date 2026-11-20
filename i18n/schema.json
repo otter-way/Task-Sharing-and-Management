@@ -13791,6 +13791,140 @@
 				"timeTracking"
 			]
 		},
+		"whiteboard": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"pageTitle": {
+					"type": "string"
+				},
+				"loading": {
+					"type": "string"
+				},
+				"loadError": {
+					"type": "string"
+				},
+				"retry": {
+					"type": "string"
+				},
+				"empty": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"heading": {
+							"type": "string"
+						}
+					},
+					"required": ["heading"]
+				},
+				"status": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"neverSaved": {
+							"type": "string"
+						},
+						"saving": {
+							"type": "string"
+						},
+						"saved": {
+							"type": "string"
+						},
+						"savedBy": {
+							"type": "string"
+						},
+						"failed": {
+							"type": "string"
+						},
+						"tooLarge": {
+							"type": "string"
+						},
+						"readOnly": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"neverSaved",
+						"saving",
+						"saved",
+						"savedBy",
+						"failed",
+						"tooLarge",
+						"readOnly"
+					]
+				},
+				"overwritten": {
+					"type": "string"
+				},
+				"convert": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"button": {
+							"type": "string"
+						},
+						"created": {
+							"type": "string"
+						},
+						"error": {
+							"type": "string"
+						},
+						"noColumn": {
+							"type": "string"
+						},
+						"open": {
+							"type": "string"
+						},
+						"openKey": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"button",
+						"created",
+						"error",
+						"noColumn",
+						"open",
+						"openKey"
+					]
+				},
+				"export": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"png": {
+							"type": "string"
+						},
+						"error": {
+							"type": "string"
+						},
+						"fileName": {
+							"type": "string"
+						}
+					},
+					"required": ["png", "error", "fileName"]
+				},
+				"teammate": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"title",
+				"pageTitle",
+				"loading",
+				"loadError",
+				"retry",
+				"empty",
+				"status",
+				"overwritten",
+				"convert",
+				"export",
+				"teammate"
+			]
+		},
 		"invitations": {
 			"type": "object",
 			"additionalProperties": false,
@@ -19133,6 +19267,7 @@
 		"notifications",
 		"activity",
 		"tasks",
+		"whiteboard",
 		"invitations",
 		"workspace",
 		"team",

@@ -1126,6 +1126,18 @@ subscribeToEvent<{
   );
 });
 
+subscribeToEvent<{ projectId: string; initiatorId?: string }>(
+  "project_board.updated",
+  async ({ projectId, initiatorId }) => {
+    if (!projectId) return;
+    broadcastToProject(
+      projectId,
+      { type: "PROJECT_BOARD_UPDATED", projectId },
+      initiatorId,
+    );
+  },
+);
+
 for (const eventName of taskUpdateEvents) {
   subscribeToEvent<TaskEvent>(eventName, async (data) => {
     const { projectId, initiatorId } = data;

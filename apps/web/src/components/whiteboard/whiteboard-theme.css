@@ -1,0 +1,58 @@
+/*
+ * Maps Excalidraw's interface onto DESIGN.md: neutral surfaces, the app's
+ * primary for active tools, Geist for UI text, and the shared radii. The app's
+ * tokens already switch under `.dark`, so one block serves both themes. The
+ * doubled class outranks Excalidraw's `.excalidraw.theme--dark` defaults.
+ * Drawing colours on the canvas are content and stay Excalidraw's.
+ */
+.kaneo-whiteboard .excalidraw.excalidraw {
+  --ui-font: var(--font-sans);
+  --border-radius-lg: var(--radius-lg);
+  --border-radius-md: var(--radius-md);
+
+  --color-primary: var(--primary);
+  --color-primary-darker: var(--primary);
+  --color-primary-darkest: var(--primary);
+  --color-primary-hover: var(--primary);
+  --color-primary-light: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --color-primary-light-darker: color-mix(
+    in srgb,
+    var(--foreground) 14%,
+    transparent
+  );
+  --color-brand-hover: var(--primary);
+  --color-brand-active: var(--primary);
+  --color-surface-primary-container: color-mix(
+    in srgb,
+    var(--foreground) 10%,
+    transparent
+  );
+  --color-on-primary-container: var(--foreground);
+  --color-on-surface: var(--foreground);
+  --text-primary-color: var(--foreground);
+  --icon-fill-color: var(--foreground);
+  --keybinding-color: var(--muted-foreground);
+  --input-label-color: var(--muted-foreground);
+
+  --island-bg-color: var(--popover);
+  --popup-bg-color: var(--popover);
+  --sidebar-bg-color: var(--popover);
+  --default-bg-color: var(--background);
+  --input-bg-color: var(--background);
+  --input-hover-bg-color: var(--accent);
+  --input-border-color: var(--input);
+  --dialog-border-color: var(--border);
+  --sidebar-border-color: var(--border);
+  --default-border-color: var(--border);
+  --color-surface-lowest: var(--popover);
+  --color-surface-low: color-mix(in srgb, var(--foreground) 4%, var(--popover));
+  --color-surface-mid: color-mix(in srgb, var(--foreground) 4%, var(--popover));
+  --color-surface-high: color-mix(in srgb, var(--foreground) 8%, var(--popover));
+  --button-hover-bg: color-mix(in srgb, var(--foreground) 6%, transparent);
+  --button-active-bg: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --button-active-border: var(--ring);
+  --focus-highlight-color: var(--ring);
+  --color-slider-track: color-mix(in srgb, var(--foreground) 16%, transparent);
+  --color-slider-thumb: var(--foreground);
+  --shadow-island: 0 0 0 1px var(--border), 0 1px 2px color-mix(in srgb, var(--foreground) 4%, transparent);
+}

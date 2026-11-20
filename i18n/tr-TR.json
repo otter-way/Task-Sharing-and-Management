@@ -3859,6 +3859,40 @@
 			"durationHoursMinutes": "{{hours, number}} sa {{minutes, number}} dk"
 		}
 	},
+	"whiteboard": {
+		"title": "Fikir Tahtası",
+		"pageTitle": "{{name}} / Fikir Tahtası",
+		"loading": "Fikir tahtası yükleniyor…",
+		"loadError": "Fikir tahtası yüklenemedi.",
+		"retry": "Tekrar dene",
+		"empty": {
+			"heading": "Fikirlerinizi buraya bırakın. Bir metni ya da yapışkan notu seçip göreve dönüştürebilirsiniz."
+		},
+		"status": {
+			"neverSaved": "Henüz kaydedilmedi",
+			"saving": "Kaydediliyor…",
+			"saved": "Kaydedildi · {{time}}",
+			"savedBy": "{{name}} kaydetti · {{time}}",
+			"failed": "Kaydedilemedi",
+			"tooLarge": "Tahta kaydedilemeyecek kadar büyük. Bazı görselleri kaldırın.",
+			"readOnly": "Yalnızca görüntüleme"
+		},
+		"overwritten": "Kaydınız, {{name}} kişisinin {{time}} tarihli değişikliklerinin yerine geçti.",
+		"convert": {
+			"button": "Göreve dönüştür",
+			"created": "{{key}} oluşturuldu",
+			"error": "Görev oluşturulamadı.",
+			"noColumn": "Bu projede yeni görevler için açık bir sütun yok.",
+			"open": "Görevi aç",
+			"openKey": "{{key}} görevini aç"
+		},
+		"export": {
+			"png": "PNG olarak indir",
+			"error": "Tahta dışa aktarılamadı.",
+			"fileName": "{{name}} fikir tahtası"
+		},
+		"teammate": "Bir ekip arkadaşınız"
+	},
 	"invitations": {
 		"pageTitle": "Davetler",
 		"pendingInvitations": "Bekleyen Davetler",

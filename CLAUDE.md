@@ -40,7 +40,8 @@ pnpm monorepo; görevler Vite+ (`vp`) ile çalışır (`pnpm-workspace.yaml`, k�
 - **Proje → Sütun → Görev:** `column` (pano sütunu; `is_final` "bitti" sütununu işaretler), `task.project_id`, `task.column_id`. Görevde tek atanan kişi var (`task.assignee_id`).
 - **Görev alanları:** `title`, `description` (Markdown), `status`, `priority`, `position`, `number`, **`start_date`**, **`due_date`**, `recurrence` (jsonb: daily/weekly/monthly/yearly, aralık, hafta günleri, saat dilimi).
 - **Göreve bağlı tablolar:** `comment`, `label`, `time_entry`, `activity`, `task_relation` (`subtask`/`blocks`/`related`), `custom_field_value`, `asset`, `external_link`, `notification`.
-- **Mevcut görünümler:** pano (board), backlog, takvim, Gantt, "Görevlerim" (`my-tasks`), gelen kutusu (inbox), arama. Beyin fırtınasına özel bir model (not, fikir panosu, oylama) yok.
+- **Mevcut görünümler:** pano (board), backlog, takvim, Gantt, "Görevlerim" (`my-tasks`), gelen kutusu (inbox), arama, Fikir Tahtası (`whiteboard`).
+- **Fikir Tahtası:** projeye bir Excalidraw tahtası (`project_board`: `scene` jsonb, `version`, `updated_by`). API `GET/PUT /api/project-board/{projectId}`; son kaydeden kazanır, yanıt kimin değişikliğinin üzerine yazıldığını söyler; kayıt `PROJECT_BOARD_UPDATED` WebSocket mesajı üretir. Web kodu `apps/web/src/components/whiteboard/`, çizim fontları `apps/web/vite-plugins/excalidraw-fonts.ts` ile uygulamadan sunulur. Göreve dönüştürülen öğe `customData.kaneoTaskId` ve görev bağlantısı taşır.
 
 ### Değişikliği uçtan uca takip et
 

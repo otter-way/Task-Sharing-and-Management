@@ -1698,6 +1698,135 @@
           "updatedAt"
         ]
       },
+      "ProjectBoard": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string"
+          },
+          "scene": {
+            "$ref": "#/components/schemas/ProjectBoardScene"
+          },
+          "version": {
+            "type": "integer",
+            "description": "Grows by one on every save; 0 before the first save."
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ],
+            "description": "Who saved, or null if that account was deleted."
+          }
+        },
+        "required": [
+          "projectId",
+          "scene",
+          "version",
+          "updatedAt",
+          "updatedBy"
+        ]
+      },
+      "ProjectBoardScene": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "elements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {}
+            },
+            "maxItems": 10000
+          },
+          "appState": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "files": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": [
+          "elements"
+        ],
+        "description": "Null until the board is saved for the first time."
+      },
+      "SavedProjectBoard": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "overwritten": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "updatedBy": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "description": "Who saved, or null if that account was deleted."
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "updatedBy",
+              "updatedAt"
+            ],
+            "description": "Set when another person saved after `baseVersion`; their changes were replaced by this save."
+          }
+        },
+        "required": [
+          "version",
+          "updatedAt",
+          "overwritten"
+        ]
+      },
       "WorkspaceActivity": {
         "type": "object",
         "properties": {
@@ -15126,6 +15255,185 @@
           },
           "409": {
             "description": "The column still contains tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      }
+    },
+    "/project-board/{projectId}": {
+      "get": {
+        "operationId": "getProjectBoard",
+        "tags": [
+          "Project boards"
+        ],
+        "summary": "Get project whiteboard",
+        "description": "Get the project's brainstorming whiteboard. A project without a saved board returns version 0 and a null scene.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The project whiteboard",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectBoard"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No access to the project, or missing read permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/ApiKeyRateLimited"
+          }
+        }
+      },
+      "put": {
+        "operationId": "saveProjectBoard",
+        "tags": [
+          "Project boards"
+        ],
+        "summary": "Save project whiteboard",
+        "description": "Replace the project's whiteboard. The last save wins: a save based on an older version still succeeds and reports whose changes it replaced. Requires task:update permission. Scenes larger than 5 MB are refused.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "baseVersion": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "The board version the client last loaded or saved, or 0 for a new board. A different stored version does not block the save; the response then names whose changes were replaced."
+                  },
+                  "scene": {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/ProjectBoardScene"
+                      },
+                      {
+                        "description": "An Excalidraw scene. Elements, view settings, and embedded files are stored as sent."
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "baseVersion",
+                  "scene"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The saved board version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedProjectBoard"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No access to the project, or missing task:update permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "The board is larger than 5 MB",
             "content": {
               "application/json": {
                 "schema": {

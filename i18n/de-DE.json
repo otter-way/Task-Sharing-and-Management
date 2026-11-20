@@ -5202,5 +5202,39 @@
 		"permissions": {
 			"photos": "Kaneo verwendet deine Fotos, um Bilder an Aufgaben und Kommentare anzuhängen, und für dein Profilbild."
 		}
+	},
+	"whiteboard": {
+		"convert": {
+			"button": "Convert to task",
+			"created": "Created {{key}}",
+			"error": "Couldn't create the task.",
+			"noColumn": "This project has no open column for new tasks.",
+			"open": "Open task",
+			"openKey": "Open {{key}}"
+		},
+		"empty": {
+			"heading": "Drop your ideas here. Select a text or sticky note to turn it into a task."
+		},
+		"export": {
+			"error": "Couldn't export the board.",
+			"fileName": "{{name}} whiteboard",
+			"png": "Export PNG"
+		},
+		"loadError": "The whiteboard couldn't be loaded.",
+		"loading": "Loading whiteboard…",
+		"overwritten": "Your save replaced {{name}}'s changes from {{time}}.",
+		"pageTitle": "{{name}} / Whiteboard",
+		"retry": "Try again",
+		"status": {
+			"failed": "Couldn't save",
+			"neverSaved": "Not saved yet",
+			"readOnly": "View only",
+			"saved": "Saved {{time}}",
+			"savedBy": "{{name}} saved {{time}}",
+			"saving": "Saving…",
+			"tooLarge": "Too large to save. Remove some images."
+		},
+		"title": "Whiteboard",
+		"teammate": "A teammate"
 	}
 }
