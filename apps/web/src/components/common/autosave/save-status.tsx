@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 import { formatSaveTime } from "./format-save-time";
-import type { LastSave, SaveState } from "./use-whiteboard-autosave";
+import type { LastSave, SaveState } from "./use-autosave";
 
 type SaveStatusProps = {
   state: SaveState;
@@ -27,20 +27,20 @@ export function SaveStatus({
 
   let message: string;
   if (state === "pending" || state === "saving") {
-    message = t("whiteboard:status.saving");
+    message = t("common:autosave.saving");
   } else if (state === "failed") {
-    message = t("whiteboard:status.failed");
+    message = t("common:autosave.failed");
   } else if (state === "tooLarge") {
-    message = t("whiteboard:status.tooLarge");
+    message = t("common:autosave.tooLarge");
   } else if (!time) {
-    message = t("whiteboard:status.neverSaved");
+    message = t("common:autosave.neverSaved");
   } else if (byOther) {
-    message = t("whiteboard:status.savedBy", {
-      name: lastSave.by?.name || t("whiteboard:teammate"),
+    message = t("common:autosave.savedBy", {
+      name: lastSave.by?.name || t("common:autosave.teammate"),
       time,
     });
   } else {
-    message = t("whiteboard:status.saved", { time });
+    message = t("common:autosave.saved", { time });
   }
 
   const failed = state === "failed" || state === "tooLarge";
@@ -49,7 +49,7 @@ export function SaveStatus({
     <div className="flex min-w-0 items-center gap-1.5">
       {readOnly && (
         <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
-          {t("whiteboard:status.readOnly")}
+          {t("common:autosave.readOnly")}
         </span>
       )}
       <p
@@ -64,7 +64,7 @@ export function SaveStatus({
       </p>
       {state === "failed" && (
         <Button type="button" variant="ghost" size="xs" onClick={onRetry}>
-          {t("whiteboard:retry")}
+          {t("common:autosave.retry")}
         </Button>
       )}
     </div>

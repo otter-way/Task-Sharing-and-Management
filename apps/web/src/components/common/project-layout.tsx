@@ -76,7 +76,9 @@ export default function ProjectLayout({
           ? "gantt"
           : location.pathname.includes("/whiteboard")
             ? "whiteboard"
-            : "board");
+            : location.pathname.includes("/notes")
+              ? "notes"
+              : "board");
   const currentView = resolveProjectView(resolvedRoute, viewMode);
   const showViews = showViewSwitcher && !unavailableReason;
 

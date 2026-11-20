@@ -37,8 +37,8 @@ export function BoardActions({
         >
           <SquareArrowOutUpRight aria-hidden="true" />
           {selection.taskKey
-            ? t("whiteboard:convert.openKey", { key: selection.taskKey })
-            : t("whiteboard:convert.open")}
+            ? t("tasks:convertToTask.openKey", { key: selection.taskKey })
+            : t("tasks:convertToTask.open")}
         </Button>
       ) : selection && canConvert ? (
         <Button
@@ -49,7 +49,7 @@ export function BoardActions({
           onClick={() => onConvert(selection)}
         >
           <ListPlus aria-hidden="true" />
-          {t("whiteboard:convert.button")}
+          {t("tasks:convertToTask.button")}
         </Button>
       ) : null}
       <Button

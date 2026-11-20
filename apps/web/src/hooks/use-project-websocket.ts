@@ -198,6 +198,12 @@ export function useProjectWebSocket(projectId: string) {
         if (disposed || activeSocket !== ws) return;
         try {
           const message = JSON.parse(event.data);
+          if (message.type === "PROJECT_NOTES_UPDATED") {
+            void queryClient.invalidateQueries({
+              queryKey: ["project-notes", projectId],
+            });
+            return;
+          }
           if (message.type === "PROJECT_BOARD_UPDATED") {
             // Only a mounted whiteboard holds this query, so closed boards
             // cost nothing.

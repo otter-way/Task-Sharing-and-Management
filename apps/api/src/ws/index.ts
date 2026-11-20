@@ -1138,6 +1138,18 @@ subscribeToEvent<{ projectId: string; initiatorId?: string }>(
   },
 );
 
+subscribeToEvent<{ projectId: string; initiatorId?: string }>(
+  "project_note.updated",
+  async ({ projectId, initiatorId }) => {
+    if (!projectId) return;
+    broadcastToProject(
+      projectId,
+      { type: "PROJECT_NOTES_UPDATED", projectId },
+      initiatorId,
+    );
+  },
+);
+
 for (const eventName of taskUpdateEvents) {
   subscribeToEvent<TaskEvent>(eventName, async (data) => {
     const { projectId, initiatorId } = data;

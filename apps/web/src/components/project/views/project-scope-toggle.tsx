@@ -58,6 +58,15 @@ export function ProjectScopeToggle({
       >
         {t("whiteboard:title")}
       </ProjectScopeLink>
+      <ProjectScopeLink
+        view="notes"
+        workspaceId={workspaceId}
+        projectId={projectId}
+        active={currentView === "notes"}
+        onSelect={onSelect}
+      >
+        {t("notes:title")}
+      </ProjectScopeLink>
     </nav>
   );
 }

@@ -163,6 +163,18 @@
 				"apply": "Aplicar enlace",
 				"remove": "Quitar enlace"
 			}
+		},
+		"autosave": {
+			"neverSaved": "Not saved yet",
+			"saving": "Saving…",
+			"saved": "Saved {{time}}",
+			"savedBy": "{{name}} saved {{time}}",
+			"failed": "Couldn't save",
+			"tooLarge": "Too large to save. Remove some images.",
+			"readOnly": "View only",
+			"teammate": "A teammate",
+			"overwritten": "Your save replaced {{name}}'s changes from {{time}}.",
+			"retry": "Try again"
 		}
 	},
 	"auth": {
@@ -3929,6 +3941,14 @@
 			"durationSeconds": "{{seconds, number}} s",
 			"durationMinutes": "{{minutes, number}} min",
 			"durationHoursMinutes": "{{hours, number}} h {{minutes, number}} min"
+		},
+		"convertToTask": {
+			"button": "Convert to task",
+			"created": "Created {{key}}",
+			"error": "Couldn't create the task.",
+			"noColumn": "This project has no open column for new tasks.",
+			"open": "Open task",
+			"openKey": "Open {{key}}"
 		}
 	},
 	"invitations": {
@@ -5296,14 +5316,6 @@
 		}
 	},
 	"whiteboard": {
-		"convert": {
-			"button": "Convert to task",
-			"created": "Created {{key}}",
-			"error": "Couldn't create the task.",
-			"noColumn": "This project has no open column for new tasks.",
-			"open": "Open task",
-			"openKey": "Open {{key}}"
-		},
 		"empty": {
 			"heading": "Drop your ideas here. Select a text or sticky note to turn it into a task."
 		},
@@ -5314,19 +5326,62 @@
 		},
 		"loadError": "The whiteboard couldn't be loaded.",
 		"loading": "Loading whiteboard…",
-		"overwritten": "Your save replaced {{name}}'s changes from {{time}}.",
 		"pageTitle": "{{name}} / Whiteboard",
 		"retry": "Try again",
-		"status": {
-			"failed": "Couldn't save",
-			"neverSaved": "Not saved yet",
-			"readOnly": "View only",
-			"saved": "Saved {{time}}",
-			"savedBy": "{{name}} saved {{time}}",
-			"saving": "Saving…",
-			"tooLarge": "Too large to save. Remove some images."
+		"title": "Whiteboard"
+	},
+	"notes": {
+		"title": "Notes",
+		"pageTitle": "{{name}} / Notes",
+		"loading": "Loading notes…",
+		"loadError": "The notes couldn't be loaded.",
+		"retry": "Try again",
+		"untitled": "Untitled",
+		"titlePlaceholder": "Untitled",
+		"newNote": "New note",
+		"blank": "Blank note",
+		"noneSelected": "Pick a note or start a new one.",
+		"deleted": "This note was deleted.",
+		"backToList": "All notes",
+		"createError": "Couldn't create the note.",
+		"options": "Note options",
+		"imageTooLarge": "Images must be under {{size}} after resizing.",
+		"empty": {
+			"title": "No notes yet",
+			"description": "Keep meeting notes, plans and brainstorm summaries with the project."
 		},
-		"title": "Whiteboard",
-		"teammate": "A teammate"
+		"meta": {
+			"created": "Created by {{name}} · {{date}}",
+			"updated": "Last updated by {{name}} · {{time}}"
+		},
+		"delete": {
+			"button": "Delete note",
+			"title": "Delete this note?",
+			"description": "\"{{title}}\" will be removed for everyone in the project. This can't be undone.",
+			"success": "Note deleted",
+			"error": "Couldn't delete the note."
+		},
+		"slash": {
+			"checkList": "To-do list",
+			"checkListSubtext": "Items you can check off or turn into tasks",
+			"bulletList": "Bulleted list",
+			"image": "Image",
+			"imageSubtext": "Upload an image or paste a link"
+		},
+		"templates": {
+			"weeklyMeeting": {
+				"name": "Weekly meeting",
+				"agenda": "Agenda",
+				"decisions": "Decisions",
+				"actionItems": "Action items"
+			},
+			"brainstorm": {
+				"name": "Brainstorm summary",
+				"topic": "Topic",
+				"ideas": "Ideas",
+				"highlights": "Ideas to pursue",
+				"nextSteps": "Next steps"
+			}
+		}
 	}
 }

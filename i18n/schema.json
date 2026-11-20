@@ -630,6 +630,54 @@
 						}
 					},
 					"required": ["createProject", "createWorkspace", "createTask"]
+				},
+				"autosave": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"neverSaved": {
+							"type": "string"
+						},
+						"saving": {
+							"type": "string"
+						},
+						"saved": {
+							"type": "string"
+						},
+						"savedBy": {
+							"type": "string"
+						},
+						"failed": {
+							"type": "string"
+						},
+						"tooLarge": {
+							"type": "string"
+						},
+						"readOnly": {
+							"type": "string"
+						},
+						"teammate": {
+							"type": "string"
+						},
+						"overwritten": {
+							"type": "string"
+						},
+						"retry": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"neverSaved",
+						"saving",
+						"saved",
+						"savedBy",
+						"failed",
+						"tooLarge",
+						"readOnly",
+						"teammate",
+						"overwritten",
+						"retry"
+					]
 				}
 			},
 			"required": [
@@ -645,7 +693,8 @@
 				"people",
 				"error",
 				"formats",
-				"modals"
+				"modals",
+				"autosave"
 			]
 		},
 		"auth": {
@@ -13744,6 +13793,38 @@
 						"durationMinutes",
 						"durationHoursMinutes"
 					]
+				},
+				"convertToTask": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"button": {
+							"type": "string"
+						},
+						"created": {
+							"type": "string"
+						},
+						"error": {
+							"type": "string"
+						},
+						"noColumn": {
+							"type": "string"
+						},
+						"open": {
+							"type": "string"
+						},
+						"openKey": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"button",
+						"created",
+						"error",
+						"noColumn",
+						"open",
+						"openKey"
+					]
 				}
 			},
 			"required": [
@@ -13788,7 +13869,8 @@
 				"descriptionLoading",
 				"descriptionLoadError",
 				"board",
-				"timeTracking"
+				"timeTracking",
+				"convertToTask"
 			]
 		},
 		"whiteboard": {
@@ -13820,77 +13902,6 @@
 					},
 					"required": ["heading"]
 				},
-				"status": {
-					"type": "object",
-					"additionalProperties": false,
-					"properties": {
-						"neverSaved": {
-							"type": "string"
-						},
-						"saving": {
-							"type": "string"
-						},
-						"saved": {
-							"type": "string"
-						},
-						"savedBy": {
-							"type": "string"
-						},
-						"failed": {
-							"type": "string"
-						},
-						"tooLarge": {
-							"type": "string"
-						},
-						"readOnly": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"neverSaved",
-						"saving",
-						"saved",
-						"savedBy",
-						"failed",
-						"tooLarge",
-						"readOnly"
-					]
-				},
-				"overwritten": {
-					"type": "string"
-				},
-				"convert": {
-					"type": "object",
-					"additionalProperties": false,
-					"properties": {
-						"button": {
-							"type": "string"
-						},
-						"created": {
-							"type": "string"
-						},
-						"error": {
-							"type": "string"
-						},
-						"noColumn": {
-							"type": "string"
-						},
-						"open": {
-							"type": "string"
-						},
-						"openKey": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"button",
-						"created",
-						"error",
-						"noColumn",
-						"open",
-						"openKey"
-					]
-				},
 				"export": {
 					"type": "object",
 					"additionalProperties": false,
@@ -13906,9 +13917,6 @@
 						}
 					},
 					"required": ["png", "error", "fileName"]
-				},
-				"teammate": {
-					"type": "string"
 				}
 			},
 			"required": [
@@ -13918,11 +13926,204 @@
 				"loadError",
 				"retry",
 				"empty",
-				"status",
-				"overwritten",
-				"convert",
-				"export",
-				"teammate"
+				"export"
+			]
+		},
+		"notes": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"pageTitle": {
+					"type": "string"
+				},
+				"loading": {
+					"type": "string"
+				},
+				"loadError": {
+					"type": "string"
+				},
+				"retry": {
+					"type": "string"
+				},
+				"untitled": {
+					"type": "string"
+				},
+				"titlePlaceholder": {
+					"type": "string"
+				},
+				"newNote": {
+					"type": "string"
+				},
+				"blank": {
+					"type": "string"
+				},
+				"noneSelected": {
+					"type": "string"
+				},
+				"deleted": {
+					"type": "string"
+				},
+				"backToList": {
+					"type": "string"
+				},
+				"createError": {
+					"type": "string"
+				},
+				"options": {
+					"type": "string"
+				},
+				"imageTooLarge": {
+					"type": "string"
+				},
+				"empty": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"title": {
+							"type": "string"
+						},
+						"description": {
+							"type": "string"
+						}
+					},
+					"required": ["title", "description"]
+				},
+				"meta": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"created": {
+							"type": "string"
+						},
+						"updated": {
+							"type": "string"
+						}
+					},
+					"required": ["created", "updated"]
+				},
+				"delete": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"button": {
+							"type": "string"
+						},
+						"title": {
+							"type": "string"
+						},
+						"description": {
+							"type": "string"
+						},
+						"success": {
+							"type": "string"
+						},
+						"error": {
+							"type": "string"
+						}
+					},
+					"required": ["button", "title", "description", "success", "error"]
+				},
+				"slash": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"checkList": {
+							"type": "string"
+						},
+						"checkListSubtext": {
+							"type": "string"
+						},
+						"bulletList": {
+							"type": "string"
+						},
+						"image": {
+							"type": "string"
+						},
+						"imageSubtext": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"checkList",
+						"checkListSubtext",
+						"bulletList",
+						"image",
+						"imageSubtext"
+					]
+				},
+				"templates": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"weeklyMeeting": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"agenda": {
+									"type": "string"
+								},
+								"decisions": {
+									"type": "string"
+								},
+								"actionItems": {
+									"type": "string"
+								}
+							},
+							"required": ["name", "agenda", "decisions", "actionItems"]
+						},
+						"brainstorm": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"topic": {
+									"type": "string"
+								},
+								"ideas": {
+									"type": "string"
+								},
+								"highlights": {
+									"type": "string"
+								},
+								"nextSteps": {
+									"type": "string"
+								}
+							},
+							"required": ["name", "topic", "ideas", "highlights", "nextSteps"]
+						}
+					},
+					"required": ["weeklyMeeting", "brainstorm"]
+				}
+			},
+			"required": [
+				"title",
+				"pageTitle",
+				"loading",
+				"loadError",
+				"retry",
+				"untitled",
+				"titlePlaceholder",
+				"newNote",
+				"blank",
+				"noneSelected",
+				"deleted",
+				"backToList",
+				"createError",
+				"options",
+				"imageTooLarge",
+				"empty",
+				"meta",
+				"delete",
+				"slash",
+				"templates"
 			]
 		},
 		"invitations": {
@@ -19268,6 +19469,7 @@
 		"activity",
 		"tasks",
 		"whiteboard",
+		"notes",
 		"invitations",
 		"workspace",
 		"team",

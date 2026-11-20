@@ -14,14 +14,16 @@ export type ProjectView =
   | "backlog"
   | "calendar"
   | "gantt"
-  | "whiteboard";
+  | "whiteboard"
+  | "notes";
 
 export type ProjectRoute =
   | "board"
   | "backlog"
   | "calendar"
   | "gantt"
-  | "whiteboard";
+  | "whiteboard"
+  | "notes";
 
 export const PROJECT_ROUTE_PATHS = {
   board: "/dashboard/workspace/$workspaceId/project/$projectId/board",
@@ -29,6 +31,7 @@ export const PROJECT_ROUTE_PATHS = {
   calendar: "/dashboard/workspace/$workspaceId/project/$projectId/calendar",
   gantt: "/dashboard/workspace/$workspaceId/project/$projectId/gantt",
   whiteboard: "/dashboard/workspace/$workspaceId/project/$projectId/whiteboard",
+  notes: "/dashboard/workspace/$workspaceId/project/$projectId/notes",
 } as const;
 
 export const PROJECT_VIEWS: ReadonlyArray<{
@@ -70,7 +73,7 @@ export function routeForView(view: ProjectView): ProjectRoute {
 // Views beside the task layouts in the scope toggle; they never become the
 // remembered task layout.
 export function isTaskLayoutView(view: ProjectView): view is TaskLayout {
-  return view !== "backlog" && view !== "whiteboard";
+  return view !== "backlog" && view !== "whiteboard" && view !== "notes";
 }
 
 export function resolveProjectView(

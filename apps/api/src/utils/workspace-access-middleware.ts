@@ -14,7 +14,8 @@ type LookupResource =
   | "comment"
   | "column"
   | "workflowRule"
-  | "customField";
+  | "customField"
+  | "projectNote";
 
 type WorkspaceIdSource =
   | { type: "query"; key: string }
@@ -44,6 +45,7 @@ const RESOURCE_NOT_FOUND: Record<LookupResource, string> = {
   column: "Column not found",
   workflowRule: "Workflow rule not found",
   customField: "Custom field not found",
+  projectNote: "Note not found",
 };
 
 type WorkspaceAccessMiddlewareConfig = {
@@ -342,6 +344,22 @@ async function lookupScope(
       return field ?? null;
     }
 
+    case "projectNote": {
+      const [note] = await db
+        .select({
+          workspaceId: schema.projectTable.workspaceId,
+          projectId: schema.projectTable.id,
+        })
+        .from(schema.projectNoteTable)
+        .innerJoin(
+          schema.projectTable,
+          eq(schema.projectNoteTable.projectId, schema.projectTable.id),
+        )
+        .where(eq(schema.projectNoteTable.id, id))
+        .limit(1);
+      return note ?? null;
+    }
+
     default:
       return null;
   }
@@ -434,6 +452,11 @@ export const workspaceAccess = {
   fromCustomField: (idKey = "id") =>
     workspaceAccessMiddleware({
       sources: [{ type: "lookup", resource: "customField", idKey }],
+    }),
+
+  fromProjectNote: (idKey = "id") =>
+    workspaceAccessMiddleware({
+      sources: [{ type: "lookup", resource: "projectNote", idKey }],
     }),
 
   fromProjectId: (idKey = "projectId") =>

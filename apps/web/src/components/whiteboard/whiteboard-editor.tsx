@@ -7,6 +7,9 @@ import type {
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
+import { formatSaveTime } from "@/components/common/autosave/format-save-time";
+import { SaveStatus } from "@/components/common/autosave/save-status";
+import type { Overwritten } from "@/components/common/autosave/use-autosave";
 import { useAuth } from "@/components/providers/auth-provider/hooks/use-auth";
 import type { ProjectBoard } from "@/fetchers/project-board/get-project-board";
 import { useGetProjectBoard } from "@/hooks/queries/project-board/use-get-project-board";
@@ -20,14 +23,9 @@ import {
   type ConvertibleSelection,
   findConvertibleSelection,
 } from "./find-convertible-selection";
-import { formatSaveTime } from "./format-save-time";
-import { SaveStatus } from "./save-status";
 import { useConvertToTask } from "./use-convert-to-task";
-import { useDocumentTheme } from "./use-document-theme";
-import {
-  type Overwritten,
-  useWhiteboardAutosave,
-} from "./use-whiteboard-autosave";
+import { useDocumentTheme } from "@/hooks/use-document-theme";
+import { useWhiteboardAutosave } from "./use-whiteboard-autosave";
 import { WhiteboardMessage } from "./whiteboard-message";
 
 // The editor and its styles load only when a whiteboard opens.
@@ -100,8 +98,8 @@ export function WhiteboardEditor({
   const handleOverwritten = useCallback(
     ({ by, at }: Overwritten) => {
       toast.warning(
-        t("whiteboard:overwritten", {
-          name: by?.name || t("whiteboard:teammate"),
+        t("common:autosave.overwritten", {
+          name: by?.name || t("common:autosave.teammate"),
           time: formatSaveTime(new Date(at), new Date(), i18n.language),
         }),
       );

@@ -31,6 +31,7 @@ import billing from "./billing";
 import calendarFeed, { publicCalendarFeed } from "./calendar-feed";
 import column from "./column";
 import projectBoard from "./project-board";
+import projectNote from "./project-note";
 import comment from "./comment";
 import config from "./config";
 import customField from "./custom-field";
@@ -819,6 +820,7 @@ export function createApp() {
   const taskApi = api.route("/task", task);
   const columnApi = api.route("/column", column);
   const projectBoardApi = api.route("/project-board", projectBoard);
+  const projectNoteApi = api.route("/project-note", projectNote);
   const activityApi = api.route("/activity", activity);
   const commentApi = api.route("/comment", comment);
   const timeEntryApi = api.route("/time-entry", timeEntry);
@@ -1004,6 +1006,7 @@ export function createApp() {
     projectApi,
     calendarFeedApi,
     projectBoardApi,
+    projectNoteApi,
     publicProjectApi,
     searchApi,
     mattermostIntegrationApi,
@@ -1141,6 +1144,7 @@ const {
   projectApi,
   calendarFeedApi,
   projectBoardApi,
+  projectNoteApi,
   publicProjectApi,
   searchApi,
   slackIntegrationApi,
@@ -1173,6 +1177,7 @@ export type AppType =
   | typeof projectApi
   | typeof calendarFeedApi
   | typeof projectBoardApi
+  | typeof projectNoteApi
   | typeof taskApi
   | typeof columnApi
   | typeof activityApi

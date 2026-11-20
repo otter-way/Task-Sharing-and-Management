@@ -163,6 +163,18 @@
 				"apply": "Bağlantıyı uygula",
 				"remove": "Bağlantıyı kaldır"
 			}
+		},
+		"autosave": {
+			"neverSaved": "Henüz kaydedilmedi",
+			"saving": "Kaydediliyor…",
+			"saved": "Kaydedildi · {{time}}",
+			"savedBy": "{{name}} kaydetti · {{time}}",
+			"failed": "Kaydedilemedi",
+			"tooLarge": "Tahta kaydedilemeyecek kadar büyük. Bazı görselleri kaldırın.",
+			"readOnly": "Yalnızca görüntüleme",
+			"teammate": "Bir ekip arkadaşınız",
+			"overwritten": "Kaydınız, {{name}} kişisinin {{time}} tarihli değişikliklerinin yerine geçti.",
+			"retry": "Tekrar dene"
 		}
 	},
 	"auth": {
@@ -3857,6 +3869,14 @@
 			"durationSeconds": "{{seconds, number}} sn",
 			"durationMinutes": "{{minutes, number}} dk",
 			"durationHoursMinutes": "{{hours, number}} sa {{minutes, number}} dk"
+		},
+		"convertToTask": {
+			"button": "Göreve dönüştür",
+			"created": "{{key}} oluşturuldu",
+			"error": "Görev oluşturulamadı.",
+			"noColumn": "Bu projede yeni görevler için açık bir sütun yok.",
+			"open": "Görevi aç",
+			"openKey": "{{key}} görevini aç"
 		}
 	},
 	"whiteboard": {
@@ -3868,30 +3888,65 @@
 		"empty": {
 			"heading": "Fikirlerinizi buraya bırakın. Bir metni ya da yapışkan notu seçip göreve dönüştürebilirsiniz."
 		},
-		"status": {
-			"neverSaved": "Henüz kaydedilmedi",
-			"saving": "Kaydediliyor…",
-			"saved": "Kaydedildi · {{time}}",
-			"savedBy": "{{name}} kaydetti · {{time}}",
-			"failed": "Kaydedilemedi",
-			"tooLarge": "Tahta kaydedilemeyecek kadar büyük. Bazı görselleri kaldırın.",
-			"readOnly": "Yalnızca görüntüleme"
-		},
-		"overwritten": "Kaydınız, {{name}} kişisinin {{time}} tarihli değişikliklerinin yerine geçti.",
-		"convert": {
-			"button": "Göreve dönüştür",
-			"created": "{{key}} oluşturuldu",
-			"error": "Görev oluşturulamadı.",
-			"noColumn": "Bu projede yeni görevler için açık bir sütun yok.",
-			"open": "Görevi aç",
-			"openKey": "{{key}} görevini aç"
-		},
 		"export": {
 			"png": "PNG olarak indir",
 			"error": "Tahta dışa aktarılamadı.",
 			"fileName": "{{name}} fikir tahtası"
+		}
+	},
+	"notes": {
+		"title": "Notlar",
+		"pageTitle": "{{name}} / Notlar",
+		"loading": "Notlar yükleniyor…",
+		"loadError": "Notlar yüklenemedi.",
+		"retry": "Tekrar dene",
+		"untitled": "Adsız not",
+		"titlePlaceholder": "Başlıksız",
+		"newNote": "Yeni not",
+		"blank": "Boş not",
+		"noneSelected": "Bir not seçin ya da yeni bir not başlatın.",
+		"deleted": "Bu not silinmiş.",
+		"backToList": "Tüm notlar",
+		"createError": "Not oluşturulamadı.",
+		"options": "Not seçenekleri",
+		"imageTooLarge": "Görsel, küçültüldükten sonra {{size}} altında olmalı.",
+		"empty": {
+			"title": "Henüz not yok",
+			"description": "Toplantı notlarını, planları ve beyin fırtınası özetlerini projeyle birlikte tutun."
 		},
-		"teammate": "Bir ekip arkadaşınız"
+		"meta": {
+			"created": "{{name}} oluşturdu · {{date}}",
+			"updated": "Son güncelleme: {{name}} · {{time}}"
+		},
+		"delete": {
+			"button": "Notu sil",
+			"title": "Bu not silinsin mi?",
+			"description": "\"{{title}}\" projedeki herkes için silinecek. Bu işlem geri alınamaz.",
+			"success": "Not silindi",
+			"error": "Not silinemedi."
+		},
+		"slash": {
+			"checkList": "Yapılacak Listesi",
+			"checkListSubtext": "İşaretlenebilen ya da göreve dönüştürülebilen maddeler",
+			"bulletList": "Madde Listesi",
+			"image": "Görsel",
+			"imageSubtext": "Görsel yükleyin ya da bağlantı yapıştırın"
+		},
+		"templates": {
+			"weeklyMeeting": {
+				"name": "Haftalık Toplantı",
+				"agenda": "Gündem",
+				"decisions": "Alınan Kararlar",
+				"actionItems": "Yapılacaklar"
+			},
+			"brainstorm": {
+				"name": "Beyin Fırtınası Özeti",
+				"topic": "Konu",
+				"ideas": "Fikirler",
+				"highlights": "Öne Çıkan Fikirler",
+				"nextSteps": "Sonraki Adımlar"
+			}
+		}
 	},
 	"invitations": {
 		"pageTitle": "Davetler",

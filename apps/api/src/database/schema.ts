@@ -711,6 +711,47 @@ export const projectBoardTable = pgTable("project_board", {
     .notNull(),
 });
 
+// Notion-style project notes. `content` is the editor's block document, kept
+// opaque here. `version` grows on every save so a client can tell whether
+// someone else saved since it loaded; the last save still wins.
+export const projectNoteTable = pgTable(
+  "project_note",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projectTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    title: text("title").notNull().default(""),
+    content: jsonb("content").$type<Record<string, unknown>[]>().notNull(),
+    version: integer("version").notNull().default(1),
+    createdBy: text("created_by").references(() => userTable.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    }),
+    updatedBy: text("updated_by").references(() => userTable.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    }),
+    createdAt: timestamp("created_at", { mode: "date" })
+      .default(utcNow)
+      .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" })
+      .default(utcNow)
+      .notNull(),
+  },
+  (table) => [
+    index("project_note_project_updated_idx").on(
+      table.projectId,
+      table.updatedAt,
+    ),
+  ],
+);
+
 export const taskTable = pgTable(
   "task",
   {

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* The notes editor builds its menus from Tailwind classes in this package. */
+@source "../node_modules/@blocknote/shadcn/dist";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
 

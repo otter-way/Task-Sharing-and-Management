@@ -24,5 +24,6 @@ it("keeps backlog and whiteboard out of the remembered task layout", () => {
   expect(isTaskLayoutView("list")).toBe(true);
   expect(isTaskLayoutView("backlog")).toBe(false);
   expect(isTaskLayoutView("whiteboard")).toBe(false);
+  expect(isTaskLayoutView("notes")).toBe(false);
   expect(routeForView("whiteboard")).toBe("whiteboard");
 });

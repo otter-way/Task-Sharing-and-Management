@@ -232,6 +232,7 @@ Mevcut arayüz bu kurallara büyük ölçüde uyuyor. İncelemede görülen ve i
 | Popover, menü, diyalog çıkışları | Giriş ile aynı süre | Çıkış daha kısa (ör. 100-150ms) | Kapanan öğeyi beklemek gereksiz |
 | Uygulama kabuğu (`motion-shell-rise`) | 500ms | İstisna olarak kabul (oturum başına bir kez) | Sık görülmüyor |
 | Ödeme onayı (`billing/drawn-check.tsx`) | 300-500ms çizim animasyonu | İstisna olarak kabul (nadir an) | Nadir, tek seferlik geri bildirim |
+| Notlar (BlockNote) | Renk, font ve köşe değişkenleri `note-editor.css` ile token'lara bağlı; BlockNote'un iç menü bileşenleri kendi sınıflarını (ör. `transition-all`) kullanır | İstisna olarak kabul | Paket kodu değiştirilmeden kullanılıyor (MPL-2.0) |
 | Fikir Tahtası (Excalidraw) | Arayüz renkleri `whiteboard-theme.css` ile token'lara bağlı; çizim renkleri, seçim çerçevesi ve el yazısı fontları Excalidraw'un | İstisna olarak kabul | Çizim alanındakiler kullanıcı içeriğidir; arayüz değildir |
 
 ## 10. Kontrol listesi (arayüz değişikliği öncesi)

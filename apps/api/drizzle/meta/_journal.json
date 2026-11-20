@@ -526,6 +526,13 @@
       "when": 1795167613173,
       "tag": "0074_project_board",
       "breakpoints": true
+    },
+    {
+      "idx": 75,
+      "version": "7",
+      "when": 1795173209999,
+      "tag": "0075_project_note",
+      "breakpoints": true
     }
   ]
 }
