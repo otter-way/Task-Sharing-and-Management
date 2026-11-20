@@ -1,86 +1,125 @@
-> **Ekip Görev (Task Sharing and Management)** — Bu depo, [usekaneo/kaneo](https://github.com/usekaneo/kaneo) projesinin bir fork'udur. Amaç, Kaneo'yu küçük ekiplerin (3-8 kişi) haftalık ve aylık görev planlaması, görev paylaşımı ve beyin fırtınası için kullanacağı sade bir uygulamaya dönüştürmektir. Kaneo, Andrej Acevski tarafından geliştirilmiştir ve [MIT lisansı](LICENSE) ile dağıtılır. Geliştirme notları için [CLAUDE.md](CLAUDE.md) dosyasına bakın.
+# Ekip Görev
 
-<p align="center">
-  <a href="https://kaneo.app">
-    <img src="https://assets.kaneo.app/logo-text.png" alt="Kaneo's logo" width="450" />
-  </a>
-</p>
+Küçük ekiplerin (3–8 kişi) haftalık ve aylık işlerini birlikte planladığı, görevleri paylaştığı ve beyin fırtınası yaptığı, kendi sunucunuzda çalışan sade bir görev yönetimi uygulaması.
 
-<div align="center">
+> **Kaneo üzerine kurulmuştur.** Bu depo, Andrej Acevski'nin geliştirdiği açık kaynak proje yöneticisi [Kaneo](https://github.com/usekaneo/kaneo)'nun bir fork'udur ve onun [MIT lisansı](LICENSE) ile dağıtılır. Kaneo'nun lisans dosyası ve telif notu değiştirilmeden korunmuştur.
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/usekaneo/kaneo/ci.yml?branch=main)](https://github.com/usekaneo/kaneo/actions)
-[![AI Policy: Human Voice](https://img.shields.io/badge/AI_Policy-Human_Voice-blue?logo=data:image%2Fsvg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij4KICA8c3R5bGU%2BCiAgICAuaWNvbiB7CiAgICAgIGZpbGw6IG5vbmU7CiAgICAgIHN0cm9rZTogIzAwMDAwMDsKICAgICAgc3Ryb2tlLXdpZHRoOiAyLjI1OwogICAgICBzdHJva2UtbGluZWNhcDogcm91bmQ7CiAgICAgIHN0cm9rZS1saW5lam9pbjogcm91bmQ7CiAgICB9CiAgICBAbWVkaWEgKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKSB7CiAgICAgIC5pY29uIHsgc3Ryb2tlOiAjZmZmZmZmOyB9CiAgICB9CiAgPC9zdHlsZT4KICA8cGF0aCBjbGFzcz0iaWNvbiIgZD0iTTE5LjQxNCAxNC40MTRDMjEgMTIuODI4IDIyIDExLjUgMjIgOS41YTUuNSA1LjUgMCAwIDAtOS41OTEtMy42NzYuNi42IDAgMCAxLS44MTguMDAxQTUuNSA1LjUgMCAwIDAgMiA5LjVjMCAyLjMgMS41IDQgMyA1LjVsNS41MzUgNS4zNjJhMiAyIDAgMCAwIDIuODc5LjA1MiAyLjEyIDIuMTIgMCAwIDAtLjAwNC0zIDIuMTI0IDIuMTI0IDAgMSAwIDMtMyAyLjEyNCAyLjEyNCAwIDAgMCAzLjAwNCAwIDIgMiAwIDAgMCAwLTIuODI4bC0xLjg4MS0xLjg4MmEyLjQxIDIuNDEgMCAwIDAtMy40MDkgMGwtMS43MSAxLjcxYTIgMiAwIDAgMS0yLjgyOCAwIDIgMiAwIDAgMSAwLTIuODI4bDIuODIzLTIuNzYyIi8%2BCjwvc3ZnPgo%3D)](https://github.com/usekaneo/kaneo/blob/main/AI_POLICY.md)
-[![Discord](https://img.shields.io/discord/1326250681530843178?color=7389D8&label=&logo=discord&logoColor=ffffff)](https://discord.gg/rU4tSyhXXU)
-[![Sponsors](https://img.shields.io/github/sponsors/andrejsshell)](https://github.com/sponsors/andrejsshell)
-</div>
+## Amaç
 
-<div align="center">
-  <h3>
-    <a href="https://cloud.kaneo.app">Cloud</a>
-    <span> | </span>
-    <a href="https://kaneo.app/docs/core/installation">Installation</a>
-    <span> | </span>
-    <a href="https://kaneo.app">Website</a>
-    <span> | </span>
-    <a href="https://discord.gg/rU4tSyhXXU">Discord</a>
-  </h3>
-</div>
+Kaneo hızlı ve sade bir proje yöneticisi. Ekip Görev onu bir adım daha sadeleştirip küçük bir ekibin günlük ritmine odaklıyor:
 
-<p align="center">
-  Project management that doesn't become the project.
-</p>
+- Haftanın işlerini tek bakışta görmek ve gerektiğinde günden güne taşımak,
+- Ayın genel planını çıkarmak,
+- Fikirleri bir tahtada toplayıp uygun olanları doğrudan göreve dönüştürmek,
+- Toplantı notlarını ve planları projenin içinde tutmak.
 
-<p align="center">
-  <img src="screenshots/readme@1x.png" srcset="screenshots/readme@1x.png 1x, screenshots/readme.png 2x" alt="Kaneo project board with the Kaneo logo and tagline" />
-</p>
+Arayüz varsayılan olarak Türkçedir; ayarlardan 22 dilden biri seçilebilir.
 
-## Built for your team's work
+## Özellikler
 
-- **See work your way:** Board, List, Calendar, and Gantt views, plus a backlog, filters, and search.
-- **Keep task context together:** descriptions, attachments, subtasks, dependencies, labels, comments, and time tracking.
-- **Work with your team:** shared workspaces, invitations, custom roles, live updates, and public project views.
-- **Shape your workflow:** custom columns and fields, with rules that move tasks when repository activity changes.
-- **Stay informed:** in-app notifications, email, ntfy, Gotify, and personal webhooks.
-- **Connect other tools:** GitHub and Gitea, chat integrations, project webhooks, a [REST API](https://kaneo.app/docs/api-reference/introduction), a [command-line client](https://kaneo.app/docs/cli), and [MCP](https://kaneo.app/docs/core/integrations/mcp) for AI assistants.
+### Takvim: Hafta ve Ay görünümü
 
-## Installation
+- **Hafta:** Pazartesi'den Pazar'a, her görev bitiş gününde tek satır. Günlerde görev sayısı, "Bu hafta" ile bugüne dönüş ve "Sadece benim görevlerim" filtresi.
+- **Ay:** Birden fazla güne yayılan görevler çubuk olarak; kalabalık günlerde "+N daha" listesi.
+- **Sürükle-bırak ile yeniden planlama:** Bir görevi başka bir güne sürüklemek bitiş tarihini değiştirir; saat ve görevin süresi korunur. Tarihsiz görevler sağdaki **Tarihsiz** listesinden bir güne bırakılarak planlanır, ters yönde bırakmak tarihleri temizler. Klavyede odaklı görev `Alt + ←/→` ile bir gün kaydırılır.
+- Kaydetme başarısız olursa değişiklik geri alınır ve bildirim gösterilir. Hareketi azaltma tercihi (`prefers-reduced-motion`) olan kullanıcılarda yalnızca yumuşak geçişler kalır.
 
-- **Cloud:** [Get started with Kaneo Cloud](https://cloud.kaneo.app).
-- **Self-hosted:** Follow the [installation guide](https://kaneo.app/docs/core/installation).
+### Fikir Tahtası
 
-## Contributing
+- Her projede ortak bir [Excalidraw](https://github.com/excalidraw/excalidraw) tahtası; çizimler otomatik kaydedilir.
+- Bir metni ya da yapışkan notu seçip **Göreve dönüştür** ile görev oluşturulur; tahtadaki öğe göreve bağlantı taşır.
+- Tahta PNG olarak dışa aktarılabilir. Aynı anda düzenleyen ekip arkadaşları için kural "son kaydeden kazanır"dır ve kimin değişikliğinin üzerine yazıldığı bildirilir.
 
-Code, translations, documentation, and bug reports are welcome. Start with the [contributing guide](CONTRIBUTING.md) and [local development setup](ENVIRONMENT_SETUP.md). Pay particular attention to [contribution eligibility](https://github.com/usekaneo/kaneo/blob/main/CONTRIBUTING.md#contribution-eligibility).
+### Notlar
 
-Join us on [Discord](https://discord.gg/rU4tSyhXXU), report bugs in [GitHub Issues](https://github.com/usekaneo/kaneo/issues), or submit and vote on feature requests at [Kaneo Feedback](https://feedback.kaneo.app).
+- Projede birden fazla not; [BlockNote](https://github.com/TypeCellOS/BlockNote) ile blok tabanlı editör. Editör yalnızca not açılınca yüklenir.
+- Boş not, **Haftalık Toplantı** ve **Beyin Fırtınası Özeti** şablonları.
+- Otomatik kayıt; nottaki bir yapılacaklar maddesini **Göreve dönüştür**. Görseller ek depolama (S3) gerektirmesin diye küçültülüp nota gömülür.
 
-## Sponsors
+### Kaneo'dan gelenler
 
-Kaneo is open source. If you find it useful, consider [sponsoring the project](https://github.com/sponsors/andrejsshell) to help support ongoing development.
+Pano, liste, bekleyenler ve Gantt görünümleri; "Görevlerim", gelen kutusu ve arama; alt görevler, etiketler, yorumlar, zaman takibi; çalışma alanı rolleri ve davetler; gerçek zamanlı güncellemeler (WebSocket); REST API, komut satırı aracı ve MCP sunucusu. Ayrıntılar için [Kaneo dokümantasyonu](https://kaneo.app/docs).
 
-### Partners
+## Kurulum ve çalıştırma
 
-<p>
-  <img src="apps/site/public/images/blacksmith-powered.png" alt="CI powered by Blacksmith" width="368" />
-</p>
+### Gereksinimler
 
-This project is tested with BrowserStack.
+- Node.js 24.15+ (veya 26+)
+- pnpm 12.15+
+- PostgreSQL 16
+- Redis ve S3 isteğe bağlıdır; tek sunucuda ikisi de gerekmez.
 
-### Community sponsors
+### Adımlar
 
-<!-- sponsors --><a href="https://github.com/danielsada"><img src="https:&#x2F;&#x2F;github.com&#x2F;danielsada.png" width="60px" alt="User avatar: Daniel Sada" /></a><a href="https://github.com/randoneering"><img src="https:&#x2F;&#x2F;github.com&#x2F;randoneering.png" width="60px" alt="User avatar: (justin)randoneering" /></a><a href="https://github.com/ryanilano"><img src="https:&#x2F;&#x2F;github.com&#x2F;ryanilano.png" width="60px" alt="User avatar: Ryan Ilano" /></a><a href="https://github.com/blendbyte"><img src="https:&#x2F;&#x2F;github.com&#x2F;blendbyte.png" width="60px" alt="User avatar: Blendbyte" /></a><a href="https://github.com/mortenbirkelund"><img src="https:&#x2F;&#x2F;github.com&#x2F;mortenbirkelund.png" width="60px" alt="User avatar: Morten Birkelund" /></a><!-- sponsors -->
+1. **Veritabanını oluşturun** (örneğin kullanıcı `kaneo`, veritabanı `kaneo`). Docker kullanıyorsanız `compose.local.yml` içindeki `postgres` servisi işinizi görür; bu servis ayarlarını `.env.local` dosyasından okur.
 
-## License
+2. **Kök dizinde `.env` dosyası oluşturun.** Bu dosya git'e eklenmez. En az şu değerler gerekir:
 
-MIT License - see [LICENSE](LICENSE) for details.
+   ```
+   KANEO_CLIENT_URL=http://localhost:5173
+   KANEO_API_URL=http://localhost:1337
+   DATABASE_URL=postgresql://kaneo:SIFRENIZ@localhost:5432/kaneo
+   AUTH_SECRET=<openssl rand -hex 32 çıktısı>
+   ```
 
----
+   Diğer seçenekler için [`.env.sample`](.env.sample) dosyasına bakın. E-posta (SMTP) ayarlanmazsa giriş e-posta ve şifre ile yapılır.
 
-<div align="center">
-  <img src="https://repobeats.axiom.co/api/embed/3e8367ec2b2350e4fc48662df33c81dac657b833.svg" alt="Repobeats analytics image" />
-</div>
+3. **Bağımlılıkları kurun:**
 
-<p align="center">
-  Built with ❤️ by the Kaneo team and <a href="https://github.com/usekaneo/kaneo/graphs/contributors">contributors</a>
-</p>
+   ```bash
+   pnpm install
+   ```
+
+4. **Paylaşılan paketleri derleyin:**
+
+   ```bash
+   pnpm build:dependencies
+   ```
+
+5. **API'yi ve web arayüzünü ayrı terminallerde başlatın:**
+
+   ```bash
+   pnpm --filter @kaneo/api dev
+   ```
+
+   ```bash
+   pnpm --filter @kaneo/web dev
+   ```
+
+   API açılışta veritabanı migration'larını kendisi uygular.
+
+6. **Kontrol edin:** `http://localhost:1337/api/health` adresi `{"status":"ok"}` döndürmeli; uygulama `http://localhost:5173` adresinde açılır. İlk kaydolan hesap sunucu yöneticisi olur.
+
+Sunucuya kurulum (Docker imajı, Helm) için Kaneo'nun [kurulum rehberi](https://kaneo.app/docs/core/installation) geçerlidir.
+
+### Test ve kontrol
+
+| Komut | Ne yapar |
+| --- | --- |
+| `pnpm lint` | Biçim ve lint kontrolü (dosya değiştirmez). |
+| `pnpm typecheck` | TypeScript kontrolü. |
+| `pnpm test` | Birim testleri (Vitest). |
+| `pnpm test:integration` | API entegrasyon testleri; adı `_test` ile biten ayrı bir veritabanı ister (ör. `kaneo_test`). |
+| `pnpm i18n:check` | Çeviri dosyalarının `en-US.json` ile uyumunu kontrol eder. |
+| `pnpm test:e2e` | Tarayıcı testleri (Playwright); ayrıntılar [tests/e2e/README.md](tests/e2e/README.md) dosyasında. |
+
+Geliştirme kuralları ve mimari özet için [CLAUDE.md](CLAUDE.md), arayüz ilkeleri için [DESIGN.md](DESIGN.md) dosyasına bakın.
+
+## Teşekkür ve lisanslar
+
+Ekip Görev, aşağıdaki açık kaynak projelerin emeği üzerine kuruludur. Hepsine teşekkür ederiz.
+
+| Proje | Kullanım | Lisans |
+| --- | --- | --- |
+| [Kaneo](https://github.com/usekaneo/kaneo) — Andrej Acevski ve katkıda bulunanlar | Uygulamanın temeli | MIT ([LICENSE](LICENSE), © 2024 Andrej Acevski) |
+| [Excalidraw](https://github.com/excalidraw/excalidraw) | Fikir Tahtası çizim alanı (`@excalidraw/excalidraw`) | MIT |
+| [BlockNote](https://github.com/TypeCellOS/BlockNote) | Notlar editörü (`@blocknote/core`, `@blocknote/react`, `@blocknote/shadcn`) | MPL-2.0 |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) — Emil Kowalski | Animasyon ve arayüz tasarımı için geliştirme rehberleri (`.claude/skills`, `.agents/skills`) | MIT |
+
+BlockNote paketleri değiştirilmeden npm bağımlılığı olarak kullanılır. MPL-2.0 dosya bazlı bir lisanstır: BlockNote'un kendi dosyalarında değişiklik yaparak dağıtırsanız o dosyaların kaynak kodunu da paylaşmanız gerekir; bu depodaki kodu etkilemez.
+
+Kaneo'yu beğendiyseniz geliştiricisini [GitHub Sponsors](https://github.com/sponsors/andrejsshell) üzerinden destekleyebilirsiniz.
+
+## Lisans
+
+MIT. Ayrıntılar için [LICENSE](LICENSE) dosyasına bakın.
