@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { getDescriptionMatches } from "@/fetchers/task/get-description-matches";
 import type { ProjectWithTasks } from "@/types/project";
+import { foldSearchText } from "@/lib/search-text";
 
 export function useDescriptionMatches(
   projectId: string,
   project: ProjectWithTasks | null | undefined,
   textQuery: string,
 ) {
-  const query = textQuery.trim().toLowerCase();
+  const query = foldSearchText(textQuery.trim());
   const [debouncedQuery, setDebouncedQuery] = useState(query);
   useEffect(() => {
     const timeout = setTimeout(() => setDebouncedQuery(query), 250);

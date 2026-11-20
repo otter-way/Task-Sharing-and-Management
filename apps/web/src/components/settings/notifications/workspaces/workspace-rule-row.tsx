@@ -7,6 +7,7 @@ import type { ChannelAvailabilityMap } from "../notification-channels";
 import { getWorkspaceRuleSummary } from "./get-workspace-rule-summary";
 import { WorkspaceRuleDialog } from "./workspace-rule-dialog";
 import type { WorkspaceRule } from "./workspace-rule-state";
+import { toUpperText } from "@/lib/text-case";
 
 type WorkspaceRuleRowProps = {
   workspace: { id: string; name: string };
@@ -21,7 +22,7 @@ export function WorkspaceRuleRow({
 }: WorkspaceRuleRowProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const initial = Array.from(workspace.name.trim())[0]?.toUpperCase() ?? "";
+  const initial = toUpperText(Array.from(workspace.name.trim())[0] ?? "");
 
   return (
     <>

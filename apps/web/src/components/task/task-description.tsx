@@ -76,6 +76,7 @@ import { uploadTaskImage } from "@/lib/upload-task-image";
 import { ResizableImage } from "./extensions/resizable-image";
 import { SHIKI_CODEBLOCK_REFRESH_META } from "./extensions/shiki-code-block";
 import "tippy.js/dist/tippy.css";
+import { matchesSearch } from "@/lib/search-text";
 
 type TaskDescriptionProps = {
   taskId: string;
@@ -721,12 +722,12 @@ export default function TaskDescription({ taskId }: TaskDescriptionProps) {
   );
 
   const filteredSlashCommands = useMemo(() => {
-    const query = slashMenu?.query.trim().toLowerCase() || "";
+    const query = slashMenu?.query.trim() || "";
     if (!query) return slashCommands;
     return slashCommands.filter(
       (command) =>
-        command.label.toLowerCase().includes(query) ||
-        command.search.includes(query),
+        matchesSearch(command.label, query) ||
+        matchesSearch(command.search, query),
     );
   }, [slashCommands, slashMenu?.query]);
 

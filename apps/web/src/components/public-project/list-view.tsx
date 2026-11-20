@@ -2,6 +2,7 @@ import { getColumnIcon } from "@/lib/column";
 import type { ProjectWithTasks } from "@/types/project";
 import type Task from "@/types/task";
 import { PublicTaskRow } from "./task-row";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 
 type PublicListViewProps = {
   project: ProjectWithTasks;
@@ -22,7 +23,7 @@ export function PublicListView({ project, onTaskClick }: PublicListViewProps) {
                   {getColumnIcon(column.id, column.isFinal, column.icon)}
                 </span>
                 <h3 className="font-semibold text-lg text-foreground">
-                  {column.name}
+                  {getStatusDisplayLabel(column.id, column.name)}
                 </h3>
                 <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full font-medium">
                   {column.tasks.length}

@@ -3,6 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { projectTable, taskTable } from "../database/schema";
 import { workspaceIsActive } from "../workspace/archive/active-workspace-sql";
 import { boundedTaskRead } from "./bounded-read";
+import { foldedText, foldSearchText } from "../search/fold-search-text";
 
 export const BOARD_DESCRIPTION_MAX_BYTES = 64 * 1024;
 export const DESCRIPTION_CHUNK_CHARACTERS = 32 * 1024;
@@ -70,7 +71,7 @@ export async function getDeferredDescriptionMatches(
         and(
           eq(taskTable.projectId, projectId),
           descriptionDeferred,
-          sql`strpos(lower(${taskTable.description}), lower(${query})) > 0`,
+          sql`strpos(${foldedText(taskTable.description)}, ${foldSearchText(query)}) > 0`,
           after ? gt(taskTable.id, after) : undefined,
         ),
       )

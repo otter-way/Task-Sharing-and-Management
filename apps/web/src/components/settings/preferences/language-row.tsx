@@ -1,8 +1,4 @@
-import {
-  type AppLocale,
-  defaultLocale,
-  supportedLocales,
-} from "@i18n/resources";
+import { type AppLocale, supportedLocales } from "@i18n/resources";
 import { useTranslation } from "react-i18next";
 import { ManagedProfileNote } from "@/components/settings/managed-profile-note";
 import { SettingsRow } from "@/components/settings/settings-row";
@@ -15,13 +11,14 @@ import {
 } from "@/components/ui/select";
 import useManagedProfileFields from "@/hooks/queries/user/use-managed-profile-fields";
 import { useLocale } from "@/hooks/use-locale";
+import { appDefaultLocale } from "@/lib/i18n/app-default-locale";
 import { getLocaleLabel } from "@/lib/i18n/get-locale-label";
 
 export function LanguageRow() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
   const isManaged = useManagedProfileFields().includes("locale");
-  const selectedLocale: AppLocale = locale ?? defaultLocale;
+  const selectedLocale: AppLocale = locale ?? appDefaultLocale;
 
   return (
     <SettingsRow

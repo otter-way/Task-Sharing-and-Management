@@ -64,6 +64,7 @@ import {
 } from "./project-access/project-access-value";
 import { findMemberProjectAccess } from "./project-access/find-member-project-access";
 import { getInvitationProjectAccess } from "./project-access/get-invitation-project-access";
+import { capitalizeText } from "@/lib/text-case";
 
 type Props = {
   workspaceId: string;
@@ -96,11 +97,6 @@ function toneFor(value: string): string {
     hash |= 0;
   }
   return AVATAR_TONES[Math.abs(hash) % AVATAR_TONES.length];
-}
-
-function capitalize(value: string): string {
-  if (!value) return value;
-  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 function MembersTable({ workspaceId, invitations, users }: Props) {
@@ -317,7 +313,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                       <SelectTrigger size="sm" className="h-8 w-32">
                         <SelectValue>
                           {t(`team:roles.${member.role}`, {
-                            defaultValue: capitalize(member.role),
+                            defaultValue: capitalizeText(member.role),
                           })}
                         </SelectValue>
                       </SelectTrigger>
@@ -337,7 +333,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                             That UI lives in workspace settings (TODO). */}
                         {customRoles.map((r) => (
                           <SelectItem key={r.id} value={r.role}>
-                            {capitalize(r.role)}
+                            {capitalizeText(r.role)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -345,7 +341,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
                   ) : (
                     <Badge variant="secondary" className="capitalize">
                       {t(`team:roles.${member.role}`, {
-                        defaultValue: capitalize(member.role),
+                        defaultValue: capitalizeText(member.role),
                       })}
                     </Badge>
                   )}
@@ -447,7 +443,7 @@ function MembersTable({ workspaceId, invitations, users }: Props) {
               <TableCell className="py-3">
                 <Badge variant="outline" className="capitalize">
                   {t(`team:roles.${invitation.role}`, {
-                    defaultValue: capitalize(invitation.role),
+                    defaultValue: capitalizeText(invitation.role),
                   })}
                 </Badge>
               </TableCell>

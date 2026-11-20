@@ -10,6 +10,7 @@ import { toast } from "@/lib/toast";
 import useProjectStore from "@/store/project";
 import type { ProjectWithTasks } from "@/types/project";
 import { ArchiveTasksModal } from "../../shared/modals/archive-tasks-modal";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 
 type ColumnHeaderProps = {
   column: ProjectWithTasks["columns"][number];
@@ -63,7 +64,7 @@ export function ColumnHeader({
           {getColumnIcon(column.id, column.isFinal, column.icon)}
         </span>
         <span className="truncate font-medium text-[13px] text-board-title leading-5">
-          {column.name}
+          {getStatusDisplayLabel(column.id, column.name)}
         </span>
         <span className="text-board-id text-xs tabular-nums">
           {column.tasks.length}

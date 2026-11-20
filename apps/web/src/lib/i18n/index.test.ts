@@ -33,7 +33,7 @@ vi.mock("@i18n/resources", async (importOriginal) => {
   };
 });
 
-const { i18n, preloadNamespaces } = await import("./index");
+const { i18n, preloadNamespaces, resolveLocale } = await import("./index");
 
 function staleChunkError() {
   return new TypeError(
@@ -44,6 +44,22 @@ function staleChunkError() {
 function flushMicrotasks() {
   return new Promise((resolve) => setTimeout(resolve, 0));
 }
+
+describe("resolveLocale", () => {
+  it("opens in Turkish when the person has not picked a language", () => {
+    expect(resolveLocale(null)).toBe("tr-TR");
+    expect(resolveLocale(undefined)).toBe("tr-TR");
+  });
+
+  it("keeps a language the person picked", () => {
+    expect(resolveLocale("de-DE")).toBe("de-DE");
+    expect(resolveLocale("en")).toBe("en-US");
+  });
+
+  it("falls back to Turkish for an unsupported language", () => {
+    expect(resolveLocale("xx-XX")).toBe("tr-TR");
+  });
+});
 
 describe("preloadNamespaces", () => {
   it("loads every namespace so non-default keys resolve after async init", async () => {

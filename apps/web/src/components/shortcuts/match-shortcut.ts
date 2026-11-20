@@ -1,3 +1,5 @@
+import { matchesSearch } from "@/lib/search-text";
+
 const KEY_ALIASES: Record<string, readonly string[]> = {
   cmd: ["⌘"],
   command: ["⌘"],
@@ -37,9 +39,8 @@ export function matchesShortcut(
   caps: string[][][],
   query: string,
 ) {
-  const value = query.trim().toLowerCase();
-  if (!value) return true;
-  if (label.toLowerCase().includes(value)) return true;
+  if (!query.trim()) return true;
+  if (matchesSearch(label, query)) return true;
   const matchCap = capMatcher(query);
   return Boolean(matchCap && caps.flat(2).some(matchCap));
 }

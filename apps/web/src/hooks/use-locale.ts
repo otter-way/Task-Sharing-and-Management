@@ -3,14 +3,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { authClient } from "@/lib/auth-client";
-import { getBrowserLocale, resolveLocale } from "@/lib/i18n";
+import { resolveLocale } from "@/lib/i18n";
 
 export function useLocale() {
   const { i18n } = useTranslation();
   const queryClient = useQueryClient();
 
   const locale = useMemo(
-    () => resolveLocale(i18n.resolvedLanguage, getBrowserLocale()),
+    () => resolveLocale(i18n.resolvedLanguage),
     [i18n.resolvedLanguage],
   );
 
@@ -20,7 +20,7 @@ export function useLocale() {
       throw new Error(error.message || "Failed to update locale");
     }
 
-    const resolved = resolveLocale(nextLocale, null);
+    const resolved = resolveLocale(nextLocale);
     document.documentElement.lang = resolved;
     await queryClient.invalidateQueries({ queryKey: ["session"] });
     await i18n.changeLanguage(resolved);

@@ -1,5 +1,6 @@
 import { Inbox, LayoutPanelLeft, CircleCheck, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { toUpperText } from "@/lib/text-case";
 
 type PreviewSidebarProps = {
   workspaceName: string;
@@ -14,7 +15,7 @@ export function PreviewSidebar({
   projectName,
 }: PreviewSidebarProps) {
   const { t } = useTranslation();
-  const initial = Array.from(workspaceName.trim())[0]?.toUpperCase() ?? "";
+  const initial = toUpperText(Array.from(workspaceName.trim())[0] ?? "");
 
   return (
     <div className="flex w-52 shrink-0 flex-col gap-4 px-2.5 py-3">

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { FilterSubject } from "./filter-subject";
+import { matchesSearch } from "@/lib/search-text";
 
 export type FilterEntry = {
   value: string;
@@ -18,8 +19,7 @@ export type FilterEntryGroup = {
   items: FilterEntry[];
 };
 
-const matches = (text: string, query: string) =>
-  text.toLowerCase().includes(query.trim().toLowerCase());
+const matches = (text: string, query: string) => matchesSearch(text, query);
 
 const subjectEntry = (subject: FilterSubject): FilterEntry => ({
   value: `subject:${subject.id}`,

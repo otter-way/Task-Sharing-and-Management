@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { CustomFieldDefinition } from "@/components/project/custom-fields/types";
 import { cn } from "@/lib/cn";
 import { CheckboxMark } from "./checkbox-mark";
+import { matchesSearch } from "@/lib/search-text";
 
 type OptionFieldEditorProps = {
   field: CustomFieldDefinition;
@@ -27,10 +28,7 @@ export function OptionFieldEditor({
     (option) =>
       !field.hiddenOptions?.includes(option) || selected.includes(option),
   );
-  const needle = query.trim().toLowerCase();
-  const filtered = options.filter((option) =>
-    option.toLowerCase().includes(needle),
-  );
+  const filtered = options.filter((option) => matchesSearch(option, query));
 
   return (
     <div className="w-60">

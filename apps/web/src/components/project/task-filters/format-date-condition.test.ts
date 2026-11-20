@@ -1,6 +1,16 @@
-import { expect, it } from "vite-plus/test";
+import { afterAll, beforeAll, expect, it } from "vite-plus/test";
 import { i18n } from "@/lib/i18n";
 import { formatDateCondition } from "./format-date-condition";
+
+// Dates follow the interface language, which defaults to Turkish.
+let previousLanguage: string;
+beforeAll(async () => {
+  previousLanguage = i18n.language;
+  await i18n.changeLanguage("en-US");
+});
+afterAll(async () => {
+  await i18n.changeLanguage(previousLanguage);
+});
 
 it("shows both chosen dates and the comparison in chip labels", () => {
   const t = i18n.getFixedT("en-US");

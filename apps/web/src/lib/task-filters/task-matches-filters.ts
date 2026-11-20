@@ -10,6 +10,7 @@ import { DUE_DATE_FILTER_VALUES } from "./due-date-filter-values";
 import type Task from "@/types/task";
 import { matchesDateCondition, parseDateCondition } from "./date-condition";
 import { customFieldSubjectId } from "./filter-subject-id";
+import { foldSearchText, matchesSearch } from "@/lib/search-text";
 
 export type TaskFilterContext = {
   query?: string;
@@ -24,19 +25,20 @@ export type TaskFilterContext = {
 };
 
 function matchesQuery(task: Task, context: TaskFilterContext) {
-  const query = context.query?.trim().toLowerCase();
-  if (!query) return true;
+  const rawQuery = context.query?.trim() ?? "";
+  if (!rawQuery) return true;
+  const query = foldSearchText(rawQuery);
 
   const taskNumber = task.number?.toString() ?? "";
   const identifier =
     taskNumber && context.projectSlug
-      ? `${context.projectSlug}-${taskNumber}`.toLowerCase()
+      ? foldSearchText(`${context.projectSlug}-${taskNumber}`)
       : "";
 
   return (
     context.descriptionMatches?.has(task.id) ||
-    (task.title?.toLowerCase() ?? "").includes(query) ||
-    (task.description?.toLowerCase() ?? "").includes(query) ||
+    matchesSearch(task.title, rawQuery) ||
+    matchesSearch(task.description, rawQuery) ||
     taskNumber.includes(query) ||
     (identifier !== "" && identifier.startsWith(query)) ||
     (taskNumber !== "" && `#${taskNumber}`.startsWith(query))

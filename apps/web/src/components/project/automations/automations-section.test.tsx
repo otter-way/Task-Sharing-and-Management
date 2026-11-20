@@ -17,6 +17,12 @@ const m = vi.hoisted(() => ({
   canUpdate: true,
 }));
 
+// Column names are shown as stored; translating default names is covered
+// by the i18n domain helpers.
+vi.mock("@/lib/i18n/domain", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/i18n/domain")>()),
+  getStatusDisplayLabel: (status: string, name?: string) => name ?? status,
+}));
 vi.mock("@/lib/i18n", () => ({ i18n: { t: (key: string) => key } }));
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({

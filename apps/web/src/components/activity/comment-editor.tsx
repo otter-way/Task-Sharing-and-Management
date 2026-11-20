@@ -62,6 +62,7 @@ import { normalizeCommentMarkdown } from "@/lib/normalize-comment-markdown";
 import { pasteMarkdown } from "@/lib/paste-markdown";
 import { toast } from "@/lib/toast";
 import { uploadTaskImage } from "@/lib/upload-task-image";
+import { matchesSearch } from "@/lib/search-text";
 
 type CommentEditorProps = {
   value: string;
@@ -524,12 +525,12 @@ export default function CommentEditor({
   );
 
   const filteredSlashCommands = useMemo(() => {
-    const query = slashMenu?.query.trim().toLowerCase() || "";
+    const query = slashMenu?.query.trim() || "";
     if (!query) return slashCommands;
     return slashCommands.filter(
       (command) =>
-        command.label.toLowerCase().includes(query) ||
-        command.search.includes(query),
+        matchesSearch(command.label, query) ||
+        matchesSearch(command.search, query),
     );
   }, [slashCommands, slashMenu?.query]);
 

@@ -51,6 +51,7 @@ import { SettingsCard } from "@/components/settings/settings-card";
 import { SettingsIconTile } from "@/components/settings/settings-icon-tile";
 import { SettingsPage } from "@/components/settings/settings-page";
 import { SettingsSection } from "@/components/settings/settings-section";
+import { isSameText } from "@/lib/search-text";
 
 export const Route = createFileRoute(
   "/_layout/_authenticated/dashboard/settings/workspace/roles",
@@ -638,12 +639,12 @@ function DraftEditor({
   };
 
   const handleCreate = async () => {
-    const trimmed = name.trim().toLowerCase();
+    const trimmed = name.trim().toLocaleLowerCase("tr-TR");
     if (!trimmed) {
       toast.error(t("settings:workspaceRoles.validation.nameRequired"));
       return;
     }
-    if (existingNames.map((n) => n.toLowerCase()).includes(trimmed)) {
+    if (existingNames.some((n) => isSameText(n, trimmed))) {
       toast.error(t("settings:workspaceRoles.validation.nameExists"));
       return;
     }

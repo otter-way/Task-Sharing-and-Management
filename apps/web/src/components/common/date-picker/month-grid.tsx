@@ -1,8 +1,10 @@
 import { startOfDay } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { DayPicker, type DateRange, type Matcher } from "react-day-picker";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
 import { useUserPreferencesStore } from "@/store/user-preferences";
+import { getDayPickerLocale } from "./day-picker-locale";
 
 const navButtonClass =
   "flex size-6 cursor-pointer items-center justify-center rounded-md text-muted-foreground outline-none transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-40 [&_svg]:size-3.5";
@@ -75,6 +77,7 @@ export function MonthGrid(props: MonthGridProps) {
     defaultMonth,
   } = props;
   const weekStartsOn = useUserPreferencesStore((state) => state.weekStartsOn);
+  const { i18n } = useTranslation();
   const today = startOfDay(new Date());
 
   const valueMonth = props.mode === "range" ? props.value?.from : props.value;
@@ -110,6 +113,7 @@ export function MonthGrid(props: MonthGridProps) {
       defaultMonth={defaultMonth ?? valueMonth ?? today}
       disabled={disabled}
       weekStartsOn={weekStartsOn}
+      locale={getDayPickerLocale(i18n?.language ?? "")}
       modifiers={{
         past: { before: today },
         limit: marked ?? false,

@@ -9,7 +9,9 @@ import {
 } from "@testing-library/react";
 import type { ComponentType, ReactNode } from "react";
 import {
+  afterAll,
   afterEach,
+  beforeAll,
   beforeEach,
   describe,
   expect,
@@ -17,6 +19,17 @@ import {
   vi,
 } from "vite-plus/test";
 import { Route } from "./$taskId_";
+import { i18n } from "@/lib/i18n";
+
+// These checks read English copy; the interface itself defaults to Turkish.
+let previousLanguage: string;
+beforeAll(async () => {
+  previousLanguage = i18n.language;
+  await i18n.changeLanguage("en-US");
+});
+afterAll(async () => {
+  await i18n.changeLanguage(previousLanguage);
+});
 
 const m = vi.hoisted(() => {
   const task = (overrides: Record<string, unknown>) => ({

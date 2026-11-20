@@ -32,6 +32,7 @@ import { useCanImport } from "@/hooks/use-can-import";
 import { cn } from "@/lib/cn";
 import generateProjectSlug from "@/lib/generate-project-id";
 import { toast } from "@/lib/toast";
+import { toUpperText } from "@/lib/text-case";
 
 type CreateProjectModalProps = {
   open: boolean;
@@ -91,7 +92,9 @@ function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
         },
       });
 
-      toast.success("Project created successfully", { icon: SquarePlusIcon });
+      toast.success(t("common:modals.createProject.successToast"), {
+        icon: SquarePlusIcon,
+      });
       handleClose();
     } catch (error) {
       toast.error(
@@ -120,7 +123,7 @@ function CreateProjectModal({ open, onClose }: CreateProjectModalProps) {
           <Breadcrumb>
             <BreadcrumbList className="gap-1 text-xs">
               <BreadcrumbItem className="text-muted-foreground font-medium tracking-wide">
-                {workspace?.name?.toUpperCase() ||
+                {(workspace?.name && toUpperText(workspace.name)) ||
                   t("common:modals.createProject.workspaceFallback")}
               </BreadcrumbItem>
               <BreadcrumbSeparator className="[&>svg]:size-3.5" />

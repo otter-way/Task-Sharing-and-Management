@@ -81,6 +81,7 @@ import useProjectStore from "@/store/project";
 import type Task from "@/types/task";
 import type { TaskRecurrence } from "@/types/task/recurrence";
 import { getInitialTaskColumn } from "./initial-task-column";
+import { isSameText, matchesSearch } from "@/lib/search-text";
 
 type CreateTaskModalProps = {
   open: boolean;
@@ -369,7 +370,7 @@ function CreateTaskModalContent({
 
   const filteredLabels = (() => {
     const searchFiltered = workspaceLabels.filter((label) =>
-      label.name.toLowerCase().includes(searchValue.toLowerCase()),
+      matchesSearch(label.name, searchValue),
     );
 
     const labelMap = new Map<string, (typeof workspaceLabels)[0]>();
@@ -385,9 +386,7 @@ function CreateTaskModalContent({
 
   const isCreatingNewLabel =
     searchValue &&
-    !workspaceLabels.some(
-      (label) => label.name.toLowerCase() === searchValue.toLowerCase(),
-    );
+    !workspaceLabels.some((label) => isSameText(label.name, searchValue));
 
   const buildDefaultCustomFieldValues = useCallback(() => {
     return customFields.reduce<Record<string, string>>((acc, field) => {

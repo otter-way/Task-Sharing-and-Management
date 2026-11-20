@@ -6,6 +6,7 @@ import MentionList, {
   type MentionListRef,
   type MentionMember,
 } from "./mention-list";
+import { matchesSearch } from "@/lib/search-text";
 
 type MentionSuggestionOptions = {
   getMembers: () => MentionMember[];
@@ -30,9 +31,8 @@ export const MentionSuggestion = Extension.create<MentionSuggestionOptions>({
       pluginKey: new PluginKey("kaneoMentionSuggestion"),
       allowSpaces: false,
       items: ({ query }) => {
-        const q = query.toLowerCase();
         return getMembers()
-          .filter((m) => m.label?.toLowerCase().includes(q))
+          .filter((m) => matchesSearch(m.label, query))
           .slice(0, 8);
       },
       command: ({ editor, range, props }) => {

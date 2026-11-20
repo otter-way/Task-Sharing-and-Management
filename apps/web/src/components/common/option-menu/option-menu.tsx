@@ -4,6 +4,7 @@ import { type ReactNode, useEffect, useEffectEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEditableTarget } from "@/lib/shortcuts/registry";
 import type { OptionMenuItem } from "./option-menu-item";
+import { matchesSearch } from "@/lib/search-text";
 
 type OptionMenuProps = {
   label: string;
@@ -26,9 +27,8 @@ export function OptionMenu({
 }: OptionMenuProps) {
   const { t } = useTranslation();
   const [query, setQuery] = useState("");
-  const needle = query.trim().toLowerCase();
   const filtered = options.filter(
-    (option) => option.pinned || option.label.toLowerCase().includes(needle),
+    (option) => option.pinned || matchesSearch(option.label, query),
   );
 
   const selectByNumber = (key: string) => {

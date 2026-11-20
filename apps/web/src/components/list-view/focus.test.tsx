@@ -13,6 +13,12 @@ function Providers({ children }: { children: ReactNode }) {
   );
 }
 
+// Column names are shown as stored; translating default names is covered
+// by the i18n domain helpers.
+vi.mock("@/lib/i18n/domain", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/i18n/domain")>()),
+  getStatusDisplayLabel: (status: string, name?: string) => name ?? status,
+}));
 vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => vi.fn(),
   useRouter: () => ({ preloadRoute: () => Promise.resolve() }),

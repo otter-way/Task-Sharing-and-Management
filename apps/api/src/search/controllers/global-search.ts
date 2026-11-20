@@ -10,6 +10,7 @@ import {
 } from "../../database/schema";
 import { canAccessProject } from "../../project-access/can-access-project";
 import { projectAccessCondition } from "../../project-access/project-access-condition";
+import { foldedLike, foldSearchText } from "../fold-search-text";
 import { escapeLikePattern } from "../like-pattern";
 import { TASK_SHORT_ID_PATTERN } from "../task-short-id";
 
@@ -147,7 +148,7 @@ async function globalSearch(params: SearchParams): Promise<{
   }
 
   const results: SearchResult[] = [];
-  const searchPattern = `%${query.toLowerCase()}%`;
+  const searchPattern = `%${escapeLikePattern(foldSearchText(query))}%`;
 
   const workspaceFilter = and(
     workspaceId
@@ -240,8 +241,8 @@ async function globalSearch(params: SearchParams): Promise<{
     // Also run text search for tasks
     const taskRelevanceScore = sql<number>`
       CASE
-        WHEN LOWER(${taskTable.title}) LIKE ${searchPattern} THEN 3
-        WHEN LOWER(${taskTable.description}) LIKE ${searchPattern} THEN 2
+        WHEN ${foldedLike(taskTable.title, searchPattern)} THEN 3
+        WHEN ${foldedLike(taskTable.description, searchPattern)} THEN 2
         ELSE 1
       END
     `;
@@ -273,8 +274,8 @@ async function globalSearch(params: SearchParams): Promise<{
           workspaceFilter,
           projectId ? eq(taskTable.projectId, projectId) : undefined,
           or(
-            ilike(taskTable.title, searchPattern),
-            ilike(taskTable.description, searchPattern),
+            foldedLike(taskTable.title, searchPattern),
+            foldedLike(taskTable.description, searchPattern),
           ),
         ),
       )
@@ -309,8 +310,8 @@ async function globalSearch(params: SearchParams): Promise<{
   if (type === "all" || type === "projects") {
     const projectRelevanceScore = sql<number>`
       CASE
-        WHEN LOWER(${projectTable.name}) LIKE ${searchPattern} THEN 3
-        WHEN LOWER(${projectTable.description}) LIKE ${searchPattern} THEN 2
+        WHEN ${foldedLike(projectTable.name, searchPattern)} THEN 3
+        WHEN ${foldedLike(projectTable.description, searchPattern)} THEN 2
         ELSE 1
       END
     `;
@@ -332,8 +333,8 @@ async function globalSearch(params: SearchParams): Promise<{
         and(
           workspaceFilter,
           or(
-            ilike(projectTable.name, searchPattern),
-            ilike(projectTable.description, searchPattern),
+            foldedLike(projectTable.name, searchPattern),
+            foldedLike(projectTable.description, searchPattern),
           ),
         ),
       )
@@ -361,8 +362,8 @@ async function globalSearch(params: SearchParams): Promise<{
   if (type === "all" || type === "workspaces") {
     const workspaceRelevanceScore = sql<number>`
       CASE
-        WHEN LOWER(${workspaceTable.name}) LIKE ${searchPattern} THEN 3
-        WHEN LOWER(${workspaceTable.description}) LIKE ${searchPattern} THEN 2
+        WHEN ${foldedLike(workspaceTable.name, searchPattern)} THEN 3
+        WHEN ${foldedLike(workspaceTable.description, searchPattern)} THEN 2
         ELSE 1
       END
     `;
@@ -381,8 +382,8 @@ async function globalSearch(params: SearchParams): Promise<{
           inArray(workspaceTable.id, accessibleWorkspaceIds),
           workspaceId ? eq(workspaceTable.id, workspaceId) : undefined,
           or(
-            ilike(workspaceTable.name, searchPattern),
-            ilike(workspaceTable.description, searchPattern),
+            foldedLike(workspaceTable.name, searchPattern),
+            foldedLike(workspaceTable.description, searchPattern),
           ),
         ),
       )
@@ -409,8 +410,8 @@ async function globalSearch(params: SearchParams): Promise<{
     const searchableActivityText = sql<string>`COALESCE(${activityTable.content}, CAST(${activityTable.eventData} AS text), '')`;
     const activityRelevanceScore = sql<number>`
       CASE
-        WHEN LOWER(${searchableActivityText}) LIKE ${searchPattern} THEN 2
-        WHEN LOWER(${taskTable.title}) LIKE ${searchPattern} THEN 1
+        WHEN ${foldedLike(searchableActivityText, searchPattern)} THEN 2
+        WHEN ${foldedLike(taskTable.title, searchPattern)} THEN 1
         ELSE 1
       END
     `;
@@ -444,8 +445,8 @@ async function globalSearch(params: SearchParams): Promise<{
           workspaceFilter,
           projectId ? eq(taskTable.projectId, projectId) : undefined,
           or(
-            ilike(searchableActivityText, searchPattern),
-            ilike(taskTable.title, searchPattern),
+            foldedLike(searchableActivityText, searchPattern),
+            foldedLike(taskTable.title, searchPattern),
           ),
           type === "comments" ? eq(activityTable.type, "comment") : undefined,
         ),

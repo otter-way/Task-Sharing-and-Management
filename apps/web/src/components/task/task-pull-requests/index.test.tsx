@@ -13,6 +13,17 @@ import { PublicTaskRow } from "@/components/public-project/task-row";
 import type { ExternalLink } from "@/types/external-link";
 import type Task from "@/types/task";
 import { TaskPullRequests } from ".";
+import { i18n } from "@/lib/i18n";
+
+// These checks read English copy; the interface itself defaults to Turkish.
+let previousLanguage: string;
+beforeAll(async () => {
+  previousLanguage = i18n.language;
+  await i18n.changeLanguage("en-US");
+});
+afterAll(async () => {
+  await i18n.changeLanguage(previousLanguage);
+});
 
 const onParentClick = vi.fn();
 

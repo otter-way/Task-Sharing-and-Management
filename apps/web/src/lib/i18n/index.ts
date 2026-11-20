@@ -8,38 +8,27 @@ import {
 import i18n from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { initReactI18next } from "react-i18next";
+import { appDefaultLocale } from "./app-default-locale";
 
 function getLanguageCode(locale: string) {
   return locale.toLowerCase().split("-")[0];
 }
 
-export function resolveLocale(
-  preferredLocale?: string | null,
-  browserLocale?: string | null,
-): AppLocale {
-  const candidates = [preferredLocale, browserLocale].filter(
-    (value): value is string => Boolean(value),
-  );
-
-  for (const candidate of candidates) {
-    const normalizedCandidate = candidate.toLowerCase();
+export function resolveLocale(preferredLocale?: string | null): AppLocale {
+  if (preferredLocale) {
+    const normalized = preferredLocale.toLowerCase();
     const exactMatch = supportedLocales.find(
-      (locale) => locale.toLowerCase() === normalizedCandidate,
+      (locale) => locale.toLowerCase() === normalized,
     );
     if (exactMatch) return exactMatch;
 
     const languageMatch = supportedLocales.find(
-      (locale) => getLanguageCode(locale) === getLanguageCode(candidate),
+      (locale) => getLanguageCode(locale) === getLanguageCode(preferredLocale),
     );
     if (languageMatch) return languageMatch;
   }
 
-  return defaultLocale;
-}
-
-export function getBrowserLocale(): string | null {
-  if (typeof navigator === "undefined") return null;
-  return navigator.language || navigator.languages?.[0] || null;
+  return appDefaultLocale;
 }
 
 // Components subscribe to the default namespace only, so any other namespace
@@ -124,7 +113,7 @@ export function preloadNamespaces(locale: AppLocale): Promise<void> {
   );
 }
 
-const initialLocale = resolveLocale(null, getBrowserLocale());
+const initialLocale = resolveLocale(null);
 
 void i18n
   .use(
