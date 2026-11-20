@@ -24,6 +24,7 @@ import {
 } from "./auth-form-styles";
 import { PasswordInput } from "./password-input";
 import type { AuthCaptcha as AuthCaptchaState } from "./use-auth-captcha";
+import { signInErrorKey } from "./sign-in-error-key";
 
 type PasswordSignInValues = { email: string; password: string };
 
@@ -66,9 +67,10 @@ export function PasswordSignInForm({
         { headers: captcha.headers },
       );
       if (result.error) {
+        const key = signInErrorKey(result.error.code);
         toast.error(
-          result.error.code === "EMAIL_NOT_VERIFIED"
-            ? t("auth:signInForm.emailNotVerified")
+          key
+            ? t(key)
             : result.error.message || t("auth:signInForm.failedSignIn"),
         );
         setIsPending(false);

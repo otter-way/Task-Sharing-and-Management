@@ -304,7 +304,8 @@
 		},
 		"signInForm": {
 			"failedSignIn": "Giriş başarısız",
-			"emailNotVerified": "Önce e-posta adresinizi onaylayın. Size yeni bir bağlantı gönderdik."
+			"emailNotVerified": "Önce e-posta adresinizi onaylayın. Size yeni bir bağlantı gönderdik.",
+			"invalidCredentials": "E-posta veya şifre hatalı."
 		},
 		"invitation": {
 			"pageTitleAccept": "Daveti Kabul Et",

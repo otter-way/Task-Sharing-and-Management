@@ -304,7 +304,8 @@
 		},
 		"signInForm": {
 			"failedSignIn": "Error al iniciar sesión",
-			"emailNotVerified": "Confirm your email address first. We sent you a new link."
+			"emailNotVerified": "Confirm your email address first. We sent you a new link.",
+			"invalidCredentials": "Wrong email or password."
 		},
 		"invitation": {
 			"pageTitleAccept": "Aceptar Invitación",
