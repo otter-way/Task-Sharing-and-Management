@@ -46,9 +46,9 @@ export function WeekDayCell({
         month: "long",
       })}
       className={cn(
-        "flex min-h-24 min-w-0 flex-col gap-1 border-border/60 p-1.5 transition-colors max-md:border-b md:min-h-0",
+        "flex min-h-24 min-w-0 flex-col gap-1 border-border/60 p-1.5 max-md:border-b md:min-h-0",
         isWeekend(day) && "bg-muted/25",
-        isOver && "bg-accent",
+        isOver ? "bg-accent" : "transition-colors duration-150",
       )}
     >
       <header className="flex items-center gap-1.5 px-1.5 pt-0.5 pb-1">

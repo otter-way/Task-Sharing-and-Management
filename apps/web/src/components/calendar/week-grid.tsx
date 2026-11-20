@@ -20,7 +20,11 @@ type WeekGridProps = {
 };
 
 // Paging weeks gives the grid one short entrance from the side it came from;
-// the cells arrive together, never one by one.
+// the cells arrive together, never one by one. Each page remounts the grid, so
+// the entrance restarts on every click: starting half-visible keeps the week
+// readable while someone pages quickly.
+const PAGE_FROM_OPACITY = 0.5;
+
 export function WeekGrid({
   days,
   groups,
@@ -42,8 +46,11 @@ export function WeekGrid({
           direction === 0
             ? false
             : reduceMotion
-              ? { opacity: 0 }
-              : { opacity: 0, transform: `translateX(${direction * 8}px)` }
+              ? { opacity: PAGE_FROM_OPACITY }
+              : {
+                  opacity: PAGE_FROM_OPACITY,
+                  transform: `translateX(${direction * 8}px)`,
+                }
         }
         animate={{ opacity: 1, transform: "translateX(0px)" }}
         transition={{ duration: 0.16, ease: EASE_OUT }}

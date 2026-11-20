@@ -32,9 +32,9 @@ function MonthDayCell({ day, column }: { day: Date; column: number }) {
       data-day={dayKey(day)}
       style={{ gridColumn: column, gridRow: "1 / -1" }}
       className={cn(
-        "min-w-0 border-r border-border/60 transition-colors",
+        "min-w-0 border-r border-border/60",
         isWeekend(day) && "bg-muted/25",
-        isOver && "bg-accent",
+        isOver ? "bg-accent" : "transition-colors duration-150",
       )}
     />
   );

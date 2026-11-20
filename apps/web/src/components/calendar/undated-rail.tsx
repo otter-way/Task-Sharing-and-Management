@@ -33,8 +33,8 @@ export function UndatedRail({
       ref={setNodeRef}
       aria-label={t("tasks:calendar.undated.title")}
       className={cn(
-        "flex min-h-0 shrink-0 flex-col gap-1 border-border/80 p-1.5 transition-colors max-md:border-t md:w-64 md:border-l",
-        isOver && "bg-accent",
+        "flex min-h-0 shrink-0 flex-col gap-1 border-border/80 p-1.5 max-md:border-t md:w-64 md:border-l",
+        isOver ? "bg-accent" : "transition-colors duration-150",
       )}
     >
       <header className="flex items-center gap-1.5 px-1.5 pt-0.5 pb-1">

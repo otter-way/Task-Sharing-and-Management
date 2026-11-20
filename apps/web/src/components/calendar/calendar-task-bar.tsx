@@ -1,5 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import CalendarSubtasks from "./calendar-subtasks";
+import { useIsLanding } from "./calendar-landing";
 import type { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
@@ -65,6 +66,8 @@ export default function CalendarTaskBar({
     data: { taskId: segment.task.id } satisfies TaskDragData,
     disabled: !movable || segment.continuesBefore,
   });
+  // Only the handle piece is the drop animation's target.
+  const isLanding = useIsLanding(task.id) && !continuesBefore;
 
   const taskKey =
     projectSlug && task.number != null
@@ -103,7 +106,7 @@ export default function CalendarTaskBar({
           "h-auto flex-col items-start gap-1 py-1 sm:h-auto",
         getCalendarTaskStatusClass(task.status),
         movable && "cursor-grab active:cursor-grabbing",
-        isDragging && "opacity-40",
+        (isDragging || isLanding) && "opacity-40",
         // Bars that run past a week edge lose their cap there so the two halves
         // read as one continuous span across rows.
         continuesBefore ? "rounded-l-none border-l-0" : "ml-1 rounded-l-md",

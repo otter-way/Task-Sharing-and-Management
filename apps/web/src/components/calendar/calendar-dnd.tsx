@@ -5,8 +5,7 @@ import {
   type DragEndEvent,
   DragOverlay,
   type DragStartEvent,
-  type DropAnimation,
-  defaultDropAnimationSideEffects,
+  type DropAnimationFunction,
   MouseSensor,
   pointerWithin,
   rectIntersection,
@@ -17,10 +16,10 @@ import {
 import { isSameDay } from "date-fns";
 import { useReducedMotion } from "motion/react";
 import { type ReactNode, useCallback, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { useRescheduleTask } from "@/hooks/mutations/task/use-reschedule-task";
 import { formatDate } from "@/lib/format";
-import { EASE_OUT_CSS } from "@/lib/motion";
 import { parseTaskDate } from "@/lib/task-schedule";
 import type Task from "@/types/task";
 import {
@@ -28,18 +27,12 @@ import {
   type TaskDragData,
   UNDATED_DROP_ID,
 } from "./calendar-dnd-ids";
+import { landDraggedCopy } from "./calendar-drop-animation";
+import { CalendarLandingContext } from "./calendar-landing";
 
-// The dropped task lands in its new slot over 200ms while its new neighbours
-// make room with the same timing (see DraggableTaskRow), so the drop reads as
-// one movement. The lifted copy grows slightly to show it left the grid.
-const DROP_ANIMATION: DropAnimation = {
-  duration: 200,
-  easing: EASE_OUT_CSS,
-  sideEffects: defaultDropAnimationSideEffects({
-    styles: { active: { opacity: "0.4" } },
-  }),
-};
 const LAYOUT_WINDOW_MS = 260;
+// Clears the landing ghost even if dnd-kit skips the drop animation.
+const LANDING_FALLBACK_MS = 400;
 
 // The day under the pointer is the target. The lifted copy is wider than a
 // day column, so judging by its overlap picked the neighbouring day.
@@ -70,7 +63,11 @@ export function CalendarDnd({
   const { mutate: reschedule } = useRescheduleTask();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [animateLayout, setAnimateLayout] = useState(false);
+  const [landingId, setLandingId] = useState<string | null>(null);
   const layoutTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
+  const landingTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
 
@@ -119,9 +116,35 @@ export function CalendarDnd({
     );
   };
 
-  const handleDragEnd = ({ active, over }: DragEndEvent) => {
+  // The row keeps its drag ghost from the drop until the lifted copy reaches
+  // it, so neither the old slot nor the new one flashes at full opacity.
+  const startLanding = (taskId: string | undefined) => {
     setActiveId(null);
+    if (!taskId) return;
+    setLandingId(taskId);
+    clearTimeout(landingTimer.current);
+    landingTimer.current = setTimeout(
+      () => setLandingId((current) => (current === taskId ? null : current)),
+      LANDING_FALLBACK_MS,
+    );
+  };
+
+  // The dropped task lands in its new slot over 200ms while its new neighbours
+  // make room with the same timing (see DraggableTaskRow), so the drop reads as
+  // one movement.
+  const dropAnimation: DropAnimationFunction = async (args) => {
+    const taskId = (args.active.data.current as TaskDragData | undefined)
+      ?.taskId;
+    const rowFade = await landDraggedCopy(args, reduceMotion ?? false);
+    flushSync(() =>
+      setLandingId((current) => (current === taskId ? null : current)),
+    );
+    rowFade?.cancel();
+  };
+
+  const handleDragEnd = ({ active, over }: DragEndEvent) => {
     const taskId = (active.data.current as TaskDragData | undefined)?.taskId;
+    startLanding(taskId);
     const task = taskId ? tasksById.get(taskId) : undefined;
     if (!task || !over) return;
 
@@ -158,12 +181,19 @@ export function CalendarDnd({
       }}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onDragCancel={() => setActiveId(null)}
+      onDragCancel={({ active }) =>
+        startLanding((active.data.current as TaskDragData | undefined)?.taskId)
+      }
     >
-      {children({ animateLayout })}
-      <DragOverlay dropAnimation={reduceMotion ? null : DROP_ANIMATION}>
+      <CalendarLandingContext.Provider value={landingId}>
+        {children({ animateLayout })}
+      </CalendarLandingContext.Provider>
+      <DragOverlay dropAnimation={dropAnimation}>
         {activeTask ? (
-          <div className="scale-[1.02] rounded-md bg-popover shadow-lg ring-1 ring-border transition-[scale] duration-150 ease-out starting:scale-100 motion-reduce:transition-none">
+          <div
+            data-calendar-drag-lift
+            className="scale-[1.02] rounded-md bg-popover shadow-lg ring-1 ring-border transition-[scale] duration-150 ease-out starting:scale-100 motion-reduce:transition-none"
+          >
             {renderOverlay(activeTask)}
           </div>
         ) : null}

@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/cn";
 import { EASE_IN_OUT } from "@/lib/motion";
 import { taskDragId, type TaskDragData } from "./calendar-dnd-ids";
+import { useIsLanding } from "./calendar-landing";
 import {
   type CalendarRowTask,
   CalendarTaskRowContent,
@@ -38,12 +39,12 @@ export function DraggableTaskRow({
     data: { taskId: task.id } satisfies TaskDragData,
     disabled: !canMove,
   });
+  const isLanding = useIsLanding(task.id);
 
   return (
     <motion.li
       layout={animateLayout ? "position" : false}
       transition={{ layout: { duration: 0.2, ease: EASE_IN_OUT } }}
-      className={cn(isDragging && "opacity-40")}
     >
       <button
         ref={setNodeRef}
@@ -63,6 +64,7 @@ export function DraggableTaskRow({
         className={cn(
           "flex w-full min-w-0 items-center gap-1.5 rounded-md px-1.5 py-1 text-left text-foreground text-xs outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring",
           canMove && "cursor-grab active:cursor-grabbing",
+          (isDragging || isLanding) && "opacity-40",
         )}
       >
         <CalendarTaskRowContent
