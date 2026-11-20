@@ -24,9 +24,11 @@ export function PropertyValue({
     >
       {children}
       {shortcutId && (
+        // Takes room only while hovered, so long names keep the row's full
+        // width the rest of the time.
         <span
           aria-hidden="true"
-          className="ms-auto hidden shrink-0 opacity-0 transition-opacity group-hover/value:opacity-100 sm:inline-flex"
+          className="ms-auto hidden shrink-0 sm:group-hover/value:inline-flex"
         >
           <ShortcutKeys id={shortcutId} />
         </span>

@@ -25,14 +25,26 @@ export function localeCompareSort(a: string, b: string, locale?: string) {
   return collator.compare(a, b);
 }
 
+// Building an Intl.DateTimeFormat is far slower than formatting with one, and
+// calendars format several dates per task on every render.
+const dateFormatters = new Map<string, Intl.DateTimeFormat>();
+
+function dateFormatter(locale: string, options?: Intl.DateTimeFormatOptions) {
+  const key = `${locale}|${options ? JSON.stringify(options) : ""}`;
+  let formatter = dateFormatters.get(key);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, options);
+    dateFormatters.set(key, formatter);
+  }
+  return formatter;
+}
+
 export function formatDate(
   value: DateInput,
   options?: Intl.DateTimeFormatOptions,
   locale?: string,
 ) {
-  return new Intl.DateTimeFormat(getLocale(locale), options).format(
-    toDate(value),
-  );
+  return dateFormatter(getLocale(locale), options).format(toDate(value));
 }
 
 export function formatDateShort(value: DateInput, locale?: string) {

@@ -4,6 +4,7 @@ import {
   format,
   startOfWeek,
 } from "date-fns";
+import { localeCompareSort } from "@/lib/format";
 import type { WeekStartsOn } from "./month-grid-model";
 
 export function buildWeekDays(anchor: Date, weekStartsOn: WeekStartsOn) {
@@ -32,7 +33,8 @@ export function groupTasksByDay<T extends { scheduleEnd: Date; title: string }>(
     group.sort(
       (a, b) =>
         a.scheduleEnd.getTime() - b.scheduleEnd.getTime() ||
-        a.title.localeCompare(b.title),
+        // Numeric and in the interface language: "7. görüşme" before "10.".
+        localeCompareSort(a.title, b.title),
     );
   }
   return groups;

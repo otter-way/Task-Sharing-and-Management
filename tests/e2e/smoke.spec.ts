@@ -10,42 +10,49 @@ test("sign up, create a workspace with a starter project, and sign in again", as
   const password = `Browser-test-${suffix}`;
   const workspaceName = `Browser test ${suffix.slice(0, 8)}`;
 
+  // A first visit opens in Turkish, the app's default language; the
+  // browser's language is not used.
   await page.goto("/auth/sign-up");
-  await page.getByLabel("Name", { exact: true }).fill("Browser Tester");
-  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("Ad Soyad", { exact: true }).fill("Browser Tester");
+  await page.getByLabel("E-posta", { exact: true }).fill(email);
   await page.locator('input[name="password"]').fill(password);
   await page
-    .getByRole("button", { name: "Create account", exact: true })
+    .getByRole("button", { name: "Hesap oluştur", exact: true })
     .click();
 
   await expect(page).toHaveURL(/\/onboarding$/);
-  await page.getByLabel("Workspace name", { exact: true }).fill(workspaceName);
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page
+    .getByLabel("Çalışma alanı adı", { exact: true })
+    .fill(workspaceName);
+  await page.getByRole("button", { name: "Devam et", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Who's it for?", exact: true }),
+    page.getByRole("heading", { name: "Kimler kullanacak?", exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
-  await expect(page.getByLabel("Project name", { exact: true })).toHaveValue(
-    "My first project",
+  await page.getByRole("button", { name: "Devam et", exact: true }).click();
+  await expect(page.getByLabel("Proje adı", { exact: true })).toHaveValue(
+    "İlk projem",
   );
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page.getByRole("button", { name: "Devam et", exact: true }).click();
   await expect(
     page.getByRole("heading", {
-      name: `${workspaceName} is ready`,
+      name: `${workspaceName} hazır`,
       exact: true,
     }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: `Open ${workspaceName}`, exact: true })
+    .getByRole("button", {
+      name: `${workspaceName} çalışma alanını aç`,
+      exact: true,
+    })
     .click();
   await expect(page).toHaveURL(
     /\/dashboard\/workspace\/[^/]+\/project\/[^/]+\/board$/,
   );
   await expect(
-    page.getByText("Drag this card to the next column", { exact: true }),
+    page.getByText("Bu kartı bir sonraki sütuna sürükleyin", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("My first project", { exact: true }).first(),
+    page.getByText("İlk projem", { exact: true }).first(),
   ).toBeVisible();
   const boardUrl = page.url();
 
@@ -59,9 +66,9 @@ test("sign up, create a workspace with a starter project, and sign in again", as
   await context.clearCookies();
   await page.goto(boardUrl);
   await expect(page).toHaveURL(/\/auth\/sign-in/);
-  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("E-posta", { exact: true }).fill(email);
   await page.locator('input[name="password"]').fill(password);
-  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await page.getByRole("button", { name: "Giriş yap", exact: true }).click();
   await expect(page).toHaveURL(boardUrl);
   await expect(
     page.getByText(workspaceName, { exact: true }).first(),

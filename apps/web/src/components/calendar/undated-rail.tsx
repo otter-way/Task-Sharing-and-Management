@@ -14,7 +14,9 @@ type UndatedRailProps = {
 };
 
 // Open tasks without a date, ready to be dragged onto a day. Dropping a dated
-// task here clears its dates: the reverse of scheduling it.
+// task here clears its dates: the reverse of scheduling it. Below md the rail
+// sits under the week and is capped, so a long list scrolls inside it instead
+// of squeezing the week out of view.
 export function UndatedRail({
   tasks,
   projectSlug,
@@ -33,7 +35,7 @@ export function UndatedRail({
       ref={setNodeRef}
       aria-label={t("tasks:calendar.undated.title")}
       className={cn(
-        "flex min-h-0 shrink-0 flex-col gap-1 border-border/80 p-1.5 max-md:border-t md:w-64 md:border-l",
+        "flex min-h-0 shrink-0 flex-col gap-1 border-border/80 p-1.5 max-md:max-h-[40%] max-md:border-t md:w-64 md:border-l",
         isOver ? "bg-accent" : "transition-colors duration-150",
       )}
     >

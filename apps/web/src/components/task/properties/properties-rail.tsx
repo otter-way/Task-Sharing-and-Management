@@ -46,7 +46,9 @@ export function PropertiesRail({
   const projectValue = (
     <>
       <ProjectIcon className="text-muted-foreground" />
-      <span className="truncate">{project?.name}</span>
+      <span className="truncate" title={project?.name}>
+        {project?.name}
+      </span>
     </>
   );
 

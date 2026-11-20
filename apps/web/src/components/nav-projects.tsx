@@ -285,7 +285,10 @@ export function NavProjects() {
                             {...boardHoverPrefetch(project.id)}
                           >
                             <ProjectIcon aria-hidden="true" />
-                            <span className="min-w-0 flex-1 truncate">
+                            <span
+                              className="min-w-0 flex-1 truncate"
+                              title={project.name}
+                            >
                               {project.name}
                             </span>
                             {/* Gives way to the row menu, which sits here on hover. */}

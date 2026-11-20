@@ -22,6 +22,24 @@ describe("week model", () => {
     ]);
   });
 
+  it("orders same-time tasks by number, not character by character", () => {
+    const days = buildWeekDays(new Date(2026, 10, 20), 1);
+    const at = new Date(2026, 10, 18, 9);
+    const [, , wednesday] = groupTasksByDay(
+      [
+        task("10. görüşme", at),
+        task("7. görüşme", at),
+        task("30. görüşme", at),
+      ],
+      days,
+    );
+    expect(wednesday?.map((item) => item.title)).toEqual([
+      "7. görüşme",
+      "10. görüşme",
+      "30. görüşme",
+    ]);
+  });
+
   it("puts tasks on their due day and leaves out other weeks", () => {
     const days = buildWeekDays(new Date(2026, 10, 20), 1);
     const groups = groupTasksByDay(
