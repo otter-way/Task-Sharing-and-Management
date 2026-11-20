@@ -1,8 +1,10 @@
+import { useDraggable } from "@dnd-kit/core";
 import CalendarSubtasks from "./calendar-subtasks";
 import type { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
 import { formatDateShort } from "@/lib/format";
+import { taskDragId, type TaskDragData } from "./calendar-dnd-ids";
 import type { PackableTask, WeekSegment } from "./month-grid-model";
 
 export type CalendarTask = PackableTask & {
@@ -32,12 +34,16 @@ export function getCalendarTaskStatusClass(status: string): string {
 type CalendarTaskBarProps = {
   segment: WeekSegment<CalendarTask>;
   projectSlug?: string;
+  // A parent spanning its subtasks has dates derived from them, so it is not
+  // moved as a whole; its subtasks move on their own.
+  canMove?: boolean;
   onOpenTask: (taskId: string) => void;
 };
 
 export default function CalendarTaskBar({
   segment,
   projectSlug,
+  canMove = false,
   onOpenTask,
 }: CalendarTaskBarProps): JSX.Element {
   const { t } = useTranslation();
@@ -50,6 +56,16 @@ export default function CalendarTaskBar({
     continuesAfter,
   } = segment;
 
+  const movable = canMove && !segment.task.subtasks?.length;
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    // A bar can be split across week rows; only its first piece is the handle.
+    id: segment.continuesBefore
+      ? `${taskDragId(segment.task.id)}:rest`
+      : taskDragId(segment.task.id),
+    data: { taskId: segment.task.id } satisfies TaskDragData,
+    disabled: !movable || segment.continuesBefore,
+  });
+
   const taskKey =
     projectSlug && task.number != null
       ? `${projectSlug}-${task.number}`
@@ -61,7 +77,10 @@ export default function CalendarTaskBar({
 
   return (
     <button
+      ref={setNodeRef}
       type="button"
+      {...attributes}
+      {...listeners}
       style={{
         gridColumn: `${columnStart} / ${columnEnd}`,
         // Row 1 holds the date numbers, so lanes start at row 2.
@@ -83,6 +102,8 @@ export default function CalendarTaskBar({
         task.subtasks?.length &&
           "h-auto flex-col items-start gap-1 py-1 sm:h-auto",
         getCalendarTaskStatusClass(task.status),
+        movable && "cursor-grab active:cursor-grabbing",
+        isDragging && "opacity-40",
         // Bars that run past a week edge lose their cap there so the two halves
         // read as one continuous span across rows.
         continuesBefore ? "rounded-l-none border-l-0" : "ml-1 rounded-l-md",

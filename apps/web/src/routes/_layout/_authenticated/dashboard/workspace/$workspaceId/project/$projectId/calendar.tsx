@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { addMonths, startOfMonth, subMonths } from "date-fns";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import CalendarToolbar from "@/components/calendar/calendar-toolbar";
-import MonthAgenda from "@/components/calendar/month-agenda";
-import MonthGrid from "@/components/calendar/month-grid";
+import { CalendarBoard } from "@/components/calendar/calendar-board";
 import { buildMonthWeeks } from "@/components/calendar/month-grid-model";
+import { useCalendarNavigation } from "@/components/calendar/use-calendar-navigation";
 import ProjectLayout from "@/components/common/project-layout";
+import { useAuth } from "@/components/providers/auth-provider/hooks/use-auth";
 import PageTitle from "@/components/page-title";
 import { DisplaySection } from "@/components/project/display/display-section";
 import { WeekStartControl } from "@/components/project/display/week-start-control";
@@ -18,6 +18,7 @@ import { LayoutSwitch } from "@/components/project/views/layout-switch";
 import TaskDetailsSheet from "@/components/task/task-details-sheet";
 import { useGetTasks } from "@/hooks/queries/task/use-get-tasks";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import { toCalendarTasks } from "@/lib/calendar-tasks";
 import useGetProjectTaskRelations from "@/hooks/queries/task-relation/use-get-project-task-relations";
 import { useUserPreferencesStore } from "@/store/user-preferences";
@@ -42,7 +43,7 @@ const MAX_LANES_DESKTOP = 3;
 const NO_RELATIONS = [] as const;
 
 function RouteComponent() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { projectId, workspaceId } = Route.useParams();
   const { taskId } = Route.useSearch();
   const navigate = useNavigate();
@@ -63,9 +64,17 @@ function RouteComponent() {
     workspaceId,
     scope: "schedule",
   });
-  const [visibleMonth, setVisibleMonth] = useState(() =>
-    startOfMonth(new Date()),
+  const calendarMode = useUserPreferencesStore((state) => state.calendarMode);
+  const setCalendarMode = useUserPreferencesStore(
+    (state) => state.setCalendarMode,
   );
+  const nav = useCalendarNavigation(calendarMode, weekStartsOn, i18n.language);
+  const visibleMonth = nav.visibleMonth;
+  const { user } = useAuth();
+  const permissions = useWorkspacePermission();
+  const assigneeFilter = view.filters.filters.assignee;
+  const onlyMineActive =
+    !!user && assigneeFilter?.length === 1 && assigneeFilter[0] === user.id;
 
   const allScheduledTasks = useMemo(
     () => toCalendarTasks(project, relations),
@@ -80,18 +89,6 @@ function RouteComponent() {
     () => buildMonthWeeks(visibleMonth, weekStartsOn),
     [visibleMonth, weekStartsOn],
   );
-
-  const handlePreviousMonth = useCallback(() => {
-    setVisibleMonth((current) => subMonths(current, 1));
-  }, []);
-
-  const handleNextMonth = useCallback(() => {
-    setVisibleMonth((current) => addMonths(current, 1));
-  }, []);
-
-  const handleToday = useCallback(() => {
-    setVisibleMonth(startOfMonth(new Date()));
-  }, []);
 
   const handleOpenTask = useCallback(
     (nextTaskId: string) => {
@@ -152,10 +149,27 @@ function RouteComponent() {
       />
       <div className="flex h-full min-h-0 flex-col bg-background">
         <CalendarToolbar
-          visibleMonth={visibleMonth}
-          onPreviousMonth={handlePreviousMonth}
-          onNextMonth={handleNextMonth}
-          onToday={handleToday}
+          mode={calendarMode}
+          onModeChange={(mode) => {
+            nav.resetDirection();
+            setCalendarMode(mode);
+          }}
+          label={nav.label}
+          onPrevious={nav.previous}
+          onNext={nav.next}
+          onToday={nav.today}
+          onlyMine={
+            user
+              ? {
+                  active: onlyMineActive,
+                  onToggle: () =>
+                    view.filters.updateFilter(
+                      "assignee",
+                      onlyMineActive ? null : [user.id],
+                    ),
+                }
+              : null
+          }
         />
 
         {isLoading || relationsLoading ? (
@@ -170,7 +184,7 @@ function RouteComponent() {
               {t("tasks:calendar.loadError")}
             </p>
           </div>
-        ) : allScheduledTasks.length === 0 ? (
+        ) : calendarMode === "week" ? null : allScheduledTasks.length === 0 ? (
           <div className="border-b border-border/80 px-4 py-3 text-center">
             <p className="text-sm font-semibold text-foreground">
               {t("tasks:calendar.noTasks")}
@@ -187,28 +201,22 @@ function RouteComponent() {
           </div>
         ) : null}
 
-        {!isLoading &&
-          !relationsLoading &&
-          !isError &&
-          (isMobile ? (
-            scheduledTasks.length > 0 && (
-              <MonthAgenda
-                tasks={scheduledTasks}
-                visibleMonth={visibleMonth}
-                projectSlug={project?.slug}
-                onOpenTask={handleOpenTask}
-              />
-            )
-          ) : (
-            <MonthGrid
-              weeks={weeks}
-              tasks={scheduledTasks}
-              visibleMonth={visibleMonth}
-              maxLanes={MAX_LANES_DESKTOP}
-              projectSlug={project?.slug}
-              onOpenTask={handleOpenTask}
-            />
-          ))}
+        {!isLoading && !relationsLoading && !isError && (
+          <CalendarBoard
+            mode={calendarMode}
+            project={project}
+            filteredProject={view.filters.filteredProject}
+            monthTasks={scheduledTasks}
+            weeks={weeks}
+            visibleMonth={visibleMonth}
+            weekDays={nav.weekDays}
+            direction={nav.direction}
+            maxLanes={MAX_LANES_DESKTOP}
+            isMobile={isMobile}
+            canMove={permissions.canUpdateTasks()}
+            onOpenTask={handleOpenTask}
+          />
+        )}
 
         <TaskDetailsSheet
           taskId={taskId}

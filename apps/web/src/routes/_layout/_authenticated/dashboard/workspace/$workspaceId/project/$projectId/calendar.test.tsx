@@ -47,7 +47,10 @@ vi.mock("@tanstack/react-router", () => ({
 }));
 vi.mock("react-i18next", async (importOriginal) => ({
   ...(await importOriginal<typeof import("react-i18next")>()),
-  useTranslation: () => ({ t: (key: string) => key }),
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: { language: "tr-TR" },
+  }),
 }));
 vi.mock("@/hooks/queries/task/use-get-tasks", () => ({
   useGetTasks: () => ({
@@ -64,14 +67,37 @@ vi.mock("@/hooks/queries/task-relation/use-get-project-task-relations", () => ({
   }),
 }));
 vi.mock("@/hooks/use-mobile", () => ({ useIsMobile: () => state.mobile }));
+vi.mock("@/components/providers/auth-provider/hooks/use-auth", () => ({
+  useAuth: () => ({ user: { id: "u1", name: "Ayşe" } }),
+}));
+vi.mock("@/hooks/use-workspace-permission", () => ({
+  useWorkspacePermission: () => ({ canUpdateTasks: () => true }),
+}));
+vi.mock("@/hooks/mutations/task/use-reschedule-task", () => ({
+  useRescheduleTask: () => ({ mutate: vi.fn() }),
+}));
 vi.mock("@/store/user-preferences", () => ({
   useUserPreferencesStore: (
-    selector: (value: { weekStartsOn: number }) => unknown,
-  ) => selector({ weekStartsOn: 1 }),
+    selector: (value: {
+      weekStartsOn: number;
+      calendarMode: string;
+      setCalendarMode: () => void;
+    }) => unknown,
+  ) =>
+    selector({
+      weekStartsOn: 1,
+      calendarMode: "month",
+      setCalendarMode: vi.fn(),
+    }),
 }));
 vi.mock("@/components/project/toolbar/use-project-task-view", () => ({
   useProjectTaskView: () => ({
-    filters: { filteredProject: state.project, clearFilters: vi.fn() },
+    filters: {
+      filteredProject: state.project,
+      clearFilters: vi.fn(),
+      filters: { assignee: null },
+      updateFilter: vi.fn(),
+    },
     subjects: [],
   }),
 }));

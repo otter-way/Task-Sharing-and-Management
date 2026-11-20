@@ -3554,7 +3554,37 @@
 			"loadError": "載入任務失敗。",
 			"dayTasksAriaLabel": "查看 {{date}} 的所有任務",
 			"taskAriaLabel": "{{title}}，{{range}}：開啟任務",
-			"noTasksThisMonth": "本月沒有排程"
+			"noTasksThisMonth": "本月沒有排程",
+			"mode": {
+				"label": "Calendar range",
+				"week": "Week",
+				"month": "Month"
+			},
+			"previousWeek": "Previous week",
+			"nextWeek": "Next week",
+			"thisWeek": "This week",
+			"onlyMine": "Only my tasks",
+			"dayCount_one": "{{count}} task",
+			"dayCount_other": "{{count}} tasks",
+			"emptyWeek": {
+				"title": "Nothing planned this week",
+				"description": "Drag a task from the undated list onto a day."
+			},
+			"undated": {
+				"title": "Undated",
+				"empty": "Every open task has a date.",
+				"hint": "Drag onto a day to schedule.",
+				"dropHint": "Drop here to clear the dates."
+			},
+			"moveHint": "Alt+← or Alt+→ moves the task by a day.",
+			"rescheduleError": "Couldn't move the task. Please try again.",
+			"dnd": {
+				"instructions": "Press and drag to move a task to another day. On a focused task, Alt+Left and Alt+Right move it by a day.",
+				"picked": "Moving {{title}}.",
+				"movedTo": "{{title}} moved to {{date}}.",
+				"movedUndated": "{{title}} no longer has a date.",
+				"cancelled": "Move cancelled."
+			}
 		},
 		"gantt": {
 			"searchPlaceholder": "搜尋已排程的任務…",

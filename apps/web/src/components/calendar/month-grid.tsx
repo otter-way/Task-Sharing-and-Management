@@ -1,8 +1,12 @@
 import { format, isSameMonth, isToday, isWeekend } from "date-fns";
+import { useDroppable } from "@dnd-kit/core";
 import { type JSX, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/format";
+import { type DayDropData, dayDropId } from "./calendar-dnd-ids";
 import CalendarTaskBar, { type CalendarTask } from "./calendar-task-bar";
+import { dayKey } from "./week-model";
 import DayOverflowPopover from "./day-overflow-popover";
 import { packWeekLanes } from "./month-grid-model";
 
@@ -12,8 +16,29 @@ type MonthGridProps = {
   visibleMonth: Date;
   maxLanes: number;
   projectSlug?: string;
+  canMove?: boolean;
   onOpenTask: (taskId: string) => void;
 };
+
+// The whole day column is the drop target, behind the task bars.
+function MonthDayCell({ day, column }: { day: Date; column: number }) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: dayDropId(day),
+    data: { day } satisfies DayDropData,
+  });
+  return (
+    <div
+      ref={setNodeRef}
+      data-day={dayKey(day)}
+      style={{ gridColumn: column, gridRow: "1 / -1" }}
+      className={cn(
+        "min-w-0 border-r border-border/60 transition-colors",
+        isWeekend(day) && "bg-muted/25",
+        isOver && "bg-accent",
+      )}
+    />
+  );
+}
 
 export default function MonthGrid({
   weeks,
@@ -21,8 +46,10 @@ export default function MonthGrid({
   visibleMonth,
   maxLanes,
   projectSlug,
+  canMove = false,
   onOpenTask,
 }: MonthGridProps): JSX.Element {
+  const { t } = useTranslation();
   const weekdayTemplate = weeks[0] ?? [];
   const layouts = useMemo(
     () => weeks.map((week) => packWeekLanes(week, tasks, maxLanes)),
@@ -57,13 +84,10 @@ export default function MonthGrid({
               }}
             >
               {week.map((day, dayIndex) => (
-                <div
+                <MonthDayCell
                   key={`cell-${day.toISOString()}`}
-                  style={{ gridColumn: dayIndex + 1, gridRow: "1 / -1" }}
-                  className={cn(
-                    "min-w-0 border-r border-border/60",
-                    isWeekend(day) && "bg-muted/25",
-                  )}
+                  day={day}
+                  column={dayIndex + 1}
                 />
               ))}
 
@@ -71,8 +95,18 @@ export default function MonthGrid({
                 <div
                   key={`number-${day.toISOString()}`}
                   style={{ gridColumn: dayIndex + 1, gridRow: 1 }}
-                  className="z-10 flex justify-end px-1 py-1"
+                  className="z-10 flex items-center justify-end gap-1 px-1 py-1"
                 >
+                  {tasksByDay[dayIndex].length > 0 && (
+                    <span
+                      className="text-[11px] text-muted-foreground tabular-nums"
+                      title={t("tasks:calendar.dayCount", {
+                        count: tasksByDay[dayIndex].length,
+                      })}
+                    >
+                      {tasksByDay[dayIndex].length}
+                    </span>
+                  )}
                   <span
                     className={cn(
                       "flex size-5 items-center justify-center rounded-full text-[11px] font-medium",
@@ -91,6 +125,7 @@ export default function MonthGrid({
                   key={`bar-${segment.task.id}`}
                   segment={segment}
                   projectSlug={projectSlug}
+                  canMove={canMove}
                   onOpenTask={onOpenTask}
                 />
               ))}

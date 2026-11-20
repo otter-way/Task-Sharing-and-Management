@@ -12920,6 +12920,118 @@
 						},
 						"noTasksThisMonth": {
 							"type": "string"
+						},
+						"mode": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"label": {
+									"type": "string"
+								},
+								"week": {
+									"type": "string"
+								},
+								"month": {
+									"type": "string"
+								}
+							},
+							"required": ["label", "week", "month"]
+						},
+						"previousWeek": {
+							"type": "string"
+						},
+						"nextWeek": {
+							"type": "string"
+						},
+						"thisWeek": {
+							"type": "string"
+						},
+						"onlyMine": {
+							"type": "string"
+						},
+						"dayCount_one": {
+							"type": "string"
+						},
+						"dayCount_zero": {
+							"type": "string"
+						},
+						"dayCount_two": {
+							"type": "string"
+						},
+						"dayCount_few": {
+							"type": "string"
+						},
+						"dayCount_many": {
+							"type": "string"
+						},
+						"dayCount_other": {
+							"type": "string"
+						},
+						"emptyWeek": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"title": {
+									"type": "string"
+								},
+								"description": {
+									"type": "string"
+								}
+							},
+							"required": ["title", "description"]
+						},
+						"undated": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"title": {
+									"type": "string"
+								},
+								"empty": {
+									"type": "string"
+								},
+								"hint": {
+									"type": "string"
+								},
+								"dropHint": {
+									"type": "string"
+								}
+							},
+							"required": ["title", "empty", "hint", "dropHint"]
+						},
+						"moveHint": {
+							"type": "string"
+						},
+						"rescheduleError": {
+							"type": "string"
+						},
+						"dnd": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"instructions": {
+									"type": "string"
+								},
+								"picked": {
+									"type": "string"
+								},
+								"movedTo": {
+									"type": "string"
+								},
+								"movedUndated": {
+									"type": "string"
+								},
+								"cancelled": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"instructions",
+								"picked",
+								"movedTo",
+								"movedUndated",
+								"cancelled"
+							]
 						}
 					},
 					"required": [
@@ -12933,7 +13045,17 @@
 						"loadError",
 						"dayTasksAriaLabel",
 						"taskAriaLabel",
-						"noTasksThisMonth"
+						"noTasksThisMonth",
+						"mode",
+						"previousWeek",
+						"nextWeek",
+						"thisWeek",
+						"onlyMine",
+						"emptyWeek",
+						"undated",
+						"moveHint",
+						"rescheduleError",
+						"dnd"
 					]
 				},
 				"gantt": {

@@ -3924,7 +3924,39 @@
 			"title": "Календарь",
 			"today": "Сегодня",
 			"loadError": "Не удалось загрузить задачи.",
-			"noTasksThisMonth": "В этом месяце ничего не запланировано"
+			"noTasksThisMonth": "В этом месяце ничего не запланировано",
+			"mode": {
+				"label": "Calendar range",
+				"week": "Week",
+				"month": "Month"
+			},
+			"previousWeek": "Previous week",
+			"nextWeek": "Next week",
+			"thisWeek": "This week",
+			"onlyMine": "Only my tasks",
+			"dayCount_one": "{{count}} task",
+			"dayCount_other": "{{count}} tasks",
+			"emptyWeek": {
+				"title": "Nothing planned this week",
+				"description": "Drag a task from the undated list onto a day."
+			},
+			"undated": {
+				"title": "Undated",
+				"empty": "Every open task has a date.",
+				"hint": "Drag onto a day to schedule.",
+				"dropHint": "Drop here to clear the dates."
+			},
+			"moveHint": "Alt+← or Alt+→ moves the task by a day.",
+			"rescheduleError": "Couldn't move the task. Please try again.",
+			"dnd": {
+				"instructions": "Press and drag to move a task to another day. On a focused task, Alt+Left and Alt+Right move it by a day.",
+				"picked": "Moving {{title}}.",
+				"movedTo": "{{title}} moved to {{date}}.",
+				"movedUndated": "{{title}} no longer has a date.",
+				"cancelled": "Move cancelled."
+			},
+			"dayCount_few": "{{count}} tasks",
+			"dayCount_many": "{{count}} tasks"
 		},
 		"descriptionSearchLoading": "Searching full descriptions…",
 		"descriptionSearchError": "Description search failed. Results may be incomplete.",

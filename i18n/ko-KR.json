@@ -3554,7 +3554,37 @@
 			"loadError": "작업을 불러오지 못했습니다.",
 			"dayTasksAriaLabel": "{{date}}의 모든 작업 보기",
 			"taskAriaLabel": "{{title}}, {{range}}: 작업 열기",
-			"noTasksThisMonth": "이번 달 예정된 항목이 없습니다"
+			"noTasksThisMonth": "이번 달 예정된 항목이 없습니다",
+			"mode": {
+				"label": "Calendar range",
+				"week": "Week",
+				"month": "Month"
+			},
+			"previousWeek": "Previous week",
+			"nextWeek": "Next week",
+			"thisWeek": "This week",
+			"onlyMine": "Only my tasks",
+			"dayCount_one": "{{count}} task",
+			"dayCount_other": "{{count}} tasks",
+			"emptyWeek": {
+				"title": "Nothing planned this week",
+				"description": "Drag a task from the undated list onto a day."
+			},
+			"undated": {
+				"title": "Undated",
+				"empty": "Every open task has a date.",
+				"hint": "Drag onto a day to schedule.",
+				"dropHint": "Drop here to clear the dates."
+			},
+			"moveHint": "Alt+← or Alt+→ moves the task by a day.",
+			"rescheduleError": "Couldn't move the task. Please try again.",
+			"dnd": {
+				"instructions": "Press and drag to move a task to another day. On a focused task, Alt+Left and Alt+Right move it by a day.",
+				"picked": "Moving {{title}}.",
+				"movedTo": "{{title}} moved to {{date}}.",
+				"movedUndated": "{{title}} no longer has a date.",
+				"cancelled": "Move cancelled."
+			}
 		},
 		"gantt": {
 			"searchPlaceholder": "예약된 티켓 검색...",

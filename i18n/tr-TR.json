@@ -3750,7 +3750,37 @@
 			"title": "Takvim",
 			"today": "Bugün",
 			"loadError": "Görevler yüklenemedi.",
-			"noTasksThisMonth": "Bu ay planlanmış bir şey yok"
+			"noTasksThisMonth": "Bu ay planlanmış bir şey yok",
+			"mode": {
+				"label": "Takvim aralığı",
+				"week": "Hafta",
+				"month": "Ay"
+			},
+			"previousWeek": "Önceki hafta",
+			"nextWeek": "Sonraki hafta",
+			"thisWeek": "Bu hafta",
+			"onlyMine": "Sadece benim görevlerim",
+			"dayCount_one": "{{count}} görev",
+			"dayCount_other": "{{count}} görev",
+			"emptyWeek": {
+				"title": "Bu hafta planlanmış görev yok",
+				"description": "Tarihsiz listesinden bir görevi bir güne sürükleyin."
+			},
+			"undated": {
+				"title": "Tarihsiz",
+				"empty": "Açık görevlerin hepsinin tarihi var.",
+				"hint": "Tarih vermek için bir güne sürükleyin.",
+				"dropHint": "Tarihleri kaldırmak için buraya bırakın."
+			},
+			"moveHint": "Alt+← ya da Alt+→ görevi bir gün kaydırır.",
+			"rescheduleError": "Görev taşınamadı. Lütfen tekrar deneyin.",
+			"dnd": {
+				"instructions": "Bir görevi başka bir güne taşımak için basılı tutup sürükleyin. Odaktaki görevde Alt+Sol ve Alt+Sağ görevi bir gün kaydırır.",
+				"picked": "{{title}} taşınıyor.",
+				"movedTo": "{{title}}, {{date}} gününe taşındı.",
+				"movedUndated": "{{title}} artık tarihsiz.",
+				"cancelled": "Taşıma iptal edildi."
+			}
 		},
 		"descriptionSearchLoading": "Tam açıklamalarda aranıyor…",
 		"descriptionSearchError": "Açıklama araması başarısız oldu. Sonuçlar eksik olabilir.",

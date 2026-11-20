@@ -12,6 +12,8 @@ export type TaskLayout = "board" | "list" | "calendar" | "gantt";
 
 export type PriorityIconStyle = "marks" | "classic";
 
+export type CalendarMode = "week" | "month";
+
 type UserPreferencesStore = {
   theme: "light" | "dark" | "system";
   setTheme: (
@@ -60,6 +62,9 @@ type UserPreferencesStore = {
 
   weekStartsOn: WeekStartDay;
   setWeekStartsOn: (weekStartsOn: WeekStartDay) => void;
+
+  calendarMode: CalendarMode;
+  setCalendarMode: (mode: CalendarMode) => void;
 
   priorityIconStyle: PriorityIconStyle;
   setPriorityIconStyle: (style: PriorityIconStyle) => void;
@@ -158,6 +163,10 @@ export const useUserPreferencesStore = create<UserPreferencesStore>()(
       // Weeks start on Monday, as in Turkey; each person can change it.
       weekStartsOn: 1,
       setWeekStartsOn: (weekStartsOn) => set({ weekStartsOn }),
+
+      // The team plans week by week, so the calendar opens on the week.
+      calendarMode: "week",
+      setCalendarMode: (calendarMode) => set({ calendarMode }),
 
       priorityIconStyle: "marks",
       setPriorityIconStyle: (priorityIconStyle) => set({ priorityIconStyle }),
