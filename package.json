@@ -21,7 +21,11 @@
     "typecheck": "vp run -r typecheck",
     "prepare": "husky",
     "format": "vp fmt",
-    "build:dependencies": "vp run --fail-if-no-match --filter \"./packages/*\" build"
+    "build:dependencies": "vp run --fail-if-no-match --filter \"./packages/*\" build",
+    "kurulum": "node scripts/dev/setup.mjs",
+    "baslat": "node scripts/dev/start.mjs",
+    "durdur": "node scripts/dev/stop.mjs",
+    "deneme-verisi": "node scripts/dev/seed-demo.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.4",

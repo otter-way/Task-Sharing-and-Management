@@ -42,6 +42,22 @@ Pano, liste, bekleyenler ve Gantt görünümleri; "Görevlerim", gelen kutusu ve
 
 ## Kurulum ve çalıştırma
 
+### Hızlı başlangıç
+
+Docker Desktop açıkken proje klasöründe:
+
+```bash
+pnpm kurulum
+```
+
+```bash
+pnpm baslat
+```
+
+Tarayıcıda <http://localhost:5173> adresini açın. Deneme ekibi, kullanıcıları ve görevleri için ikinci bir terminalde `pnpm deneme-verisi`; durdurmak için `Ctrl + C`, ardından `pnpm durdur`. Adım adım deneme listesi ve hata bildirme şablonu: [docs/yerel-deneme.md](docs/yerel-deneme.md).
+
+Aşağıdaki adımlar aynı işi elle yapmak isteyenler içindir.
+
 ### Gereksinimler
 
 - Node.js 24.15+ (veya 26+)
