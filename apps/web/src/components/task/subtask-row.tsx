@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
 import TaskCardContextMenuContent from "@/components/kanban-board/task-card-context-menu/task-card-context-menu-content";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
@@ -47,16 +47,16 @@ export default function SubtaskRow({
   onNavigate,
   onDeleteClick,
 }: SubtaskRowProps) {
-  const reduceMotion = useReducedMotion();
   const { t } = useTranslation();
 
   return (
+    // A new subtask fades in where it lands. Height is not animated
+    // (DESIGN.md 7.5), and a removed row leaves at once rather than fading
+    // and then making its neighbours jump.
     <motion.div
-      layout={!reduceMotion}
-      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-      animate={reduceMotion ? { opacity: 1 } : { opacity: 1, height: "auto" }}
-      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-      transition={{ duration: 0.2, ease: EASE_OUT }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.15, ease: EASE_OUT }}
     >
       <ContextMenu>
         <ContextMenuTrigger asChild>
